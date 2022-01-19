@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Halbow&#39;s  blog</title>
-    <link>http://halbow.me/</link>
+    <link>https://halbow.me/</link>
     <description>Recent content on Halbow&#39;s  blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Jan 2022 17:43:08 +0100</lastBuildDate><atom:link href="http://halbow.me/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 19 Jan 2022 17:43:08 +0100</lastBuildDate><atom:link href="https://halbow.me/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Pytest Gotcha</title>
-      <link>http://halbow.me/posts/pytest-gotcha/</link>
+      <link>https://halbow.me/posts/pytest-gotcha/</link>
       <pubDate>Wed, 19 Jan 2022 17:43:08 +0100</pubDate>
       
-      <guid>http://halbow.me/posts/pytest-gotcha/</guid>
+      <guid>https://halbow.me/posts/pytest-gotcha/</guid>
       <description>Pytest is a great library and has become my default choice for any testing I have to do in Python. One small pitfall I noticed several times during code review is the following usage:
 def complex_use_case(state, arg): if arg &amp;lt; 1: raise ValueError() else: state[&amp;quot;new_entry&amp;quot;] = 42 def test_complex_use_case_failure(): state = {} with pytest.raises(ValueError): complex_use_case(state, 0) assert state == {} Basically what we are trying to do here is to test that some usecase function is correctly raising a ValueError when we pass an invalid parameter and we want to ensure that the state is not changed.</description>
     </item>

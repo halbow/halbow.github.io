@@ -10,15 +10,15 @@
 <meta name="description" content="Pytest is a great library and has become my default choice for any testing I have to do in Python. One small pitfall I noticed several times during code review is the following usage:
 def complex_use_case(state, arg): if arg &lt; 1: raise ValueError() else: state[&quot;new_entry&quot;] = 42 def test_complex_use_case_failure(): state = {} with pytest.raises(ValueError): complex_use_case(state, 0) assert state == {} Basically what we are trying to do here is to test that some usecase function is correctly raising a ValueError when we pass an invalid parameter and we want to ensure that the state is not changed.">
 <meta name="author" content="">
-<link rel="canonical" href="http://halbow.me/posts/pytest-gotcha/" />
+<link rel="canonical" href="https://halbow.me/posts/pytest-gotcha/" />
 <link crossorigin="anonymous" href="/assets/css/stylesheet.min.6f60056d44d3f7eb69a4bc6c332b59960f3a995802bded244750232f33713c49.css" integrity="sha256-b2AFbUTT9&#43;tppLxsMytZlg86mVgCve0kR1AjLzNxPEk=" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
     onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="http://halbow.me/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://halbow.me/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://halbow.me/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://halbow.me/apple-touch-icon.png">
-<link rel="mask-icon" href="http://halbow.me/safari-pinned-tab.svg">
+<link rel="icon" href="https://halbow.me/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://halbow.me/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://halbow.me/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://halbow.me/apple-touch-icon.png">
+<link rel="mask-icon" href="https://halbow.me/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <meta name="generator" content="Hugo 0.89.2" />
@@ -62,7 +62,7 @@ def complex_use_case(state, arg): if arg &lt; 1: raise ValueError() else: state[
 <meta property="og:description" content="Pytest is a great library and has become my default choice for any testing I have to do in Python. One small pitfall I noticed several times during code review is the following usage:
 def complex_use_case(state, arg): if arg &lt; 1: raise ValueError() else: state[&quot;new_entry&quot;] = 42 def test_complex_use_case_failure(): state = {} with pytest.raises(ValueError): complex_use_case(state, 0) assert state == {} Basically what we are trying to do here is to test that some usecase function is correctly raising a ValueError when we pass an invalid parameter and we want to ensure that the state is not changed." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://halbow.me/posts/pytest-gotcha/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://halbow.me/posts/pytest-gotcha/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-01-19T17:43:08&#43;01:00" />
 <meta property="article:modified_time" content="2022-01-19T17:43:08&#43;01:00" />
 
@@ -81,13 +81,13 @@ def complex_use_case(state, arg): if arg &lt; 1: raise ValueError() else: state[
       "@type": "ListItem",
       "position":  2 ,
       "name": "Posts",
-      "item": "http://halbow.me/posts/"
+      "item": "https://halbow.me/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "Pytest Gotcha",
-      "item": "http://halbow.me/posts/pytest-gotcha/"
+      "item": "https://halbow.me/posts/pytest-gotcha/"
     }
   ]
 }
@@ -109,14 +109,14 @@ def complex_use_case(state, arg): if arg &lt; 1: raise ValueError() else: state[
   "dateModified": "2022-01-19T17:43:08+01:00",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://halbow.me/posts/pytest-gotcha/"
+    "@id": "https://halbow.me/posts/pytest-gotcha/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Halbow's  blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://halbow.me/favicon.ico"
+      "url": "https://halbow.me/favicon.ico"
     }
   }
 }
@@ -138,7 +138,7 @@ def complex_use_case(state, arg): if arg &lt; 1: raise ValueError() else: state[
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://halbow.me" accesskey="h" title="Halbow&#39;s  blog (Alt + H)">Halbow&#39;s  blog</a>
+            <a href="https://halbow.me" accesskey="h" title="Halbow&#39;s  blog (Alt + H)">Halbow&#39;s  blog</a>
             <span class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -262,7 +262,7 @@ else:
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="http://halbow.me">Halbow&#39;s  blog</a></span>
+    <span>&copy; 2022 <a href="https://halbow.me">Halbow&#39;s  blog</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
