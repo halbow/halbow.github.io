@@ -136,8 +136,8 @@
     </h2>
   </header>
   <section class="entry-content">
-    <p>Pytest is a great library and has become my default choice for any testing I have to do in Python. One small pitfall I noticed several times during code review is the following usage:
-def complex_use_case(state, arg): if arg &lt; 1: raise ValueError() else: state[&#34;new_entry&#34;] = 42 def test_complex_use_case_failure(): state = {} with pytest.raises(ValueError): complex_use_case(state, 0) assert state == {} Basically what we are trying to do here is to test that some usecase function is correctly raising a ValueError when we pass an invalid parameter and we want to ensure that the state is not changed....</p>
+    <p>Pytest is a great library and has become my default choice for any testing I have to do in Python. It’s really easy to start with it, just create some function starting with test_ containing some assert inside a file and run pytest on this file. Pytest will auto-discover the test function and run it, providing a detailed explanation in case of failure !
+However, there’s one small pitfall I noticed several times during code review, which is the following usage:...</p>
   </section>
   <footer class="entry-footer"><span title='2022-01-19 17:43:08 +0100 CET'>January 19, 2022</span></footer>
   <a class="entry-link" aria-label="post link to Pytest Gotcha" href="https://halbow.me/posts/pytest-gotcha/"></a>
