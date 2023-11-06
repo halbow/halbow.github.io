@@ -2,11 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://halbow.me/posts/composition-and-depedency-injection/</loc>
+    <lastmod>2023-11-06T19:55:21+01:00</lastmod>
+  </url><url>
     <loc>https://halbow.me/</loc>
-    <lastmod>2022-01-19T17:43:08+01:00</lastmod>
+    <lastmod>2023-11-06T19:55:21+01:00</lastmod>
   </url><url>
     <loc>https://halbow.me/posts/</loc>
-    <lastmod>2022-01-19T17:43:08+01:00</lastmod>
+    <lastmod>2023-11-06T19:55:21+01:00</lastmod>
   </url><url>
     <loc>https://halbow.me/posts/pytest-gotcha/</loc>
     <lastmod>2022-01-19T17:43:08+01:00</lastmod>

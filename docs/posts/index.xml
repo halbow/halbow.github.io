@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Halbow&#39;s  blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Jan 2022 17:43:08 +0100</lastBuildDate><atom:link href="https://halbow.me/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 06 Nov 2023 19:55:21 +0100</lastBuildDate><atom:link href="https://halbow.me/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Composition and Depedency Injection</title>
+      <link>https://halbow.me/posts/composition-and-depedency-injection/</link>
+      <pubDate>Mon, 06 Nov 2023 19:55:21 +0100</pubDate>
+      
+      <guid>https://halbow.me/posts/composition-and-depedency-injection/</guid>
+      <description>Back at Europython this year, I attended this very good talk on composition by Hynek Schlawack, which clicked on many level with how I code nowadays. I was never a huge fan of oriented object programming and inheritance in particular. I really recommend to watch the talk if you feel the same ! But I recently learned that when trying to apply composition together with dependency injection, things can become a bit more complex 😶</description>
+    </item>
+    
     <item>
       <title>Pytest Gotcha</title>
       <link>https://halbow.me/posts/pytest-gotcha/</link>
