@@ -1,0 +1,4 @@
+baseURL = 'http://halbow.me'
+languageCode = 'en-us'
+title = "Halbow's  blog"
+theme = "PaperMod"
