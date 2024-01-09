@@ -6,13 +6,22 @@
     <description>Recent content on Halbow&#39;s  blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Nov 2023 19:55:21 +0100</lastBuildDate><atom:link href="https://halbow.me/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 09 Jan 2024 19:04:32 +0100</lastBuildDate><atom:link href="https://halbow.me/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Composition and Depedency Injection</title>
-      <link>https://halbow.me/posts/composition-and-depedency-injection/</link>
+      <title>Syscall in Python</title>
+      <link>https://halbow.me/posts/syscall-in-python/</link>
+      <pubDate>Tue, 09 Jan 2024 19:04:32 +0100</pubDate>
+      
+      <guid>https://halbow.me/posts/syscall-in-python/</guid>
+      <description>What is a Syscall ? 🔎 Syscall are the main way for program to communicate with the Operating System. Program usually run in userspace and are limited in the action they can do. For safety reason many low level actions are handled by the kernel. As soon as you want to do something meaningful (print something to stdout, read something from a hard drive, send something on the network, etc) you have to make a syscall to communicat with the kernel to do it.</description>
+    </item>
+    
+    <item>
+      <title>Composition and Dependency Injection</title>
+      <link>https://halbow.me/posts/composition-and-dependency-injection/</link>
       <pubDate>Mon, 06 Nov 2023 19:55:21 +0100</pubDate>
       
-      <guid>https://halbow.me/posts/composition-and-depedency-injection/</guid>
+      <guid>https://halbow.me/posts/composition-and-dependency-injection/</guid>
       <description>Back at Europython this year, I attended this very good talk on composition by Hynek Schlawack, which clicked on many level with how I code nowadays. I was never a huge fan of oriented object programming and inheritance in particular. I really recommend to watch the talk if you feel the same ! But I recently learned that when trying to apply composition together with dependency injection, things can become a bit more complex 😶</description>
     </item>
     
