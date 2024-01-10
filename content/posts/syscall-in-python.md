@@ -106,7 +106,7 @@ from os import strerror, fsencode
 # load the shared librarie libc
 libc = ctypes.CDLL("libc.so.6", use_errno=True)
 
-# FLAF used for renameat2 syscall
+# FLAG used for renameat2 syscall
 RENAME_FLAG = 0
 NOREPLACE_FLAG = 1
 EXCHANGE_FLAG = 2
