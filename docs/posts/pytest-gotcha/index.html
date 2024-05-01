@@ -6,14 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
 <title>Pytest Gotcha | Halbow&#39;s  blog</title>
-<meta name="keywords" content="" />
+<meta name="keywords" content="">
 <meta name="description" content="Pytest is a great library and has become my default choice for any testing I have to do in Python. It&rsquo;s really easy to start with it, just create some function starting with test_ containing some assert inside a file and run pytest on this file. Pytest will auto-discover the test function and run it, providing a detailed explanation in case of failure !
 However, there&rsquo;s one small pitfall I noticed several times during code review, which is the following usage:">
 <meta name="author" content="">
-<link rel="canonical" href="https://halbow.me/posts/pytest-gotcha/" />
-<link crossorigin="anonymous" href="/assets/css/stylesheet.min.6f60056d44d3f7eb69a4bc6c332b59960f3a995802bded244750232f33713c49.css" integrity="sha256-b2AFbUTT9&#43;tppLxsMytZlg86mVgCve0kR1AjLzNxPEk=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
-    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="canonical" href="https://halbow.me/posts/pytest-gotcha/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://halbow.me/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://halbow.me/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://halbow.me/favicon-32x32.png">
@@ -21,7 +19,7 @@ However, there&rsquo;s one small pitfall I noticed several times during code rev
 <link rel="mask-icon" href="https://halbow.me/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<meta name="generator" content="Hugo 0.89.2" />
+<link rel="alternate" hreflang="en" href="https://halbow.me/posts/pytest-gotcha/">
 <noscript>
     <style>
         #theme-toggle,
@@ -39,7 +37,7 @@ However, there&rsquo;s one small pitfall I noticed several times during code rev
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -58,13 +56,16 @@ However, there&rsquo;s one small pitfall I noticed several times during code rev
         }
 
     </style>
-</noscript><meta property="og:title" content="Pytest Gotcha" />
+</noscript>
+  
+
+<meta property="og:title" content="Pytest Gotcha" />
 <meta property="og:description" content="Pytest is a great library and has become my default choice for any testing I have to do in Python. It&rsquo;s really easy to start with it, just create some function starting with test_ containing some assert inside a file and run pytest on this file. Pytest will auto-discover the test function and run it, providing a detailed explanation in case of failure !
 However, there&rsquo;s one small pitfall I noticed several times during code review, which is the following usage:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://halbow.me/posts/pytest-gotcha/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-01-19T17:43:08&#43;01:00" />
-<meta property="article:modified_time" content="2022-01-19T17:43:08&#43;01:00" />
+<meta property="article:published_time" content="2022-01-19T17:43:08+01:00" />
+<meta property="article:modified_time" content="2022-01-19T17:43:08+01:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Pytest Gotcha"/>
@@ -76,16 +77,16 @@ However, there&rsquo;s one small pitfall I noticed several times during code rev
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": [, 
+  "itemListElement": [
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  1 ,
       "name": "Posts",
       "item": "https://halbow.me/posts/"
     }, 
     {
       "@type": "ListItem",
-      "position":  3 ,
+      "position":  2 ,
       "name": "Pytest Gotcha",
       "item": "https://halbow.me/posts/pytest-gotcha/"
     }
@@ -102,7 +103,7 @@ However, there&rsquo;s one small pitfall I noticed several times during code rev
   "keywords": [
     
   ],
-  "articleBody": "Pytest is a great library and has become my default choice for any testing I have to do in Python. It’s really easy to start with it, just create some function starting with test_ containing some assert inside a file and run pytest on this file. Pytest will auto-discover the test function and run it, providing a detailed explanation in case of failure !\nHowever, there’s one small pitfall I noticed several times during code review, which is the following usage:\ndef complex_function(state, arg): if arg Basically what we are trying to do here is to test that some function is correctly raising a ValueError when we pass an invalid parameter and we want to ensure that the state is not changed. Now let’s consider that we do a mistake during a refactoring and the code ends up looking something like that:\ndef incorrect_function(state, arg): state[\"new_entry\"] = 42 if arg So now in our newly refactored function, even when the passed value is incorrect we have a side effect and we modify the state. Thankfully, we will catch it with our unit-test suite right … ? Not really ! The test will pass happily despite the state being modified ! So what is happening here ?\nThis is actually documented but can be easily missed: the assert is actually never evaluated as it is inside the pytest.raises context manager but after the line raising the exception. The fix is quite easy and is to move the assert out of scope of the context manager:\ndef incorrect_function(state, arg): state[\"new_entry\"] = 42 if arg But why ? 🕵️ To understand a bit more what is happening, we have to understand how context managers are working. If we look at pytest.raise source code, we see that is quite a classic implementatin of a context manager with a class defining both __enter__ and __exit__ methods. Context manager’s __exit__ method have a quite interresting behavior: if the return value is True (or truthy), it will supress any exception raised. And it’s exactly how the pytest.raises method is implemented, it will check that there’s an exception and that it’s the correct type (which we can verify the the exc_type argument) and will fail the test otherwise.\nSyntactic sugar The last bit of information we need to have a complete picture is that context manager’s implementation in Python is a syntactic sugar of a try/except block. I highly recommend this article by Brett Cannon (and the whole serie about Python’s syntactic sugar) to understand Python’s statement more deeply !\nNow Let’s take back the example from the beginning containing the gotcha and simplify it a bit:\nwith pytest.raises(ValueError): raise ValueError() assert False And if we unwrap the context manager' syntactic sugar, it becomes quite clear that the assert is dead code and will never be reached !\n context_manager = pytest.raises(ValueError) pytest_raise_enter = context_manager.__enter__ pytest_raise_exit = context_manager.__exit__ # We don't really use the ExceptionInfo returned by pytest _ = pytest_raise_enter() try: raise ValueError assert False # Our assert is dead code ! except: if not pytest_raise_exit(*sys.exc_info()): raise else: pytest_raise_exit(None, None, None) That’s a wrap 🌯 And that’s it for today ! And just to be clear, I absolutely recommend pytest as a test library, it’s great 🚀\nI hope you learned something !\n",
+  "articleBody": "Pytest is a great library and has become my default choice for any testing I have to do in Python. It’s really easy to start with it, just create some function starting with test_ containing some assert inside a file and run pytest on this file. Pytest will auto-discover the test function and run it, providing a detailed explanation in case of failure !\nHowever, there’s one small pitfall I noticed several times during code review, which is the following usage:\ndef complex_function(state, arg): if arg \u003c 1: raise ValueError() else: state[\"new_entry\"] = 42 def test_complex_function_failure(): state = {} with pytest.raises(ValueError): complex_function(state, 0) assert state == {} Basically what we are trying to do here is to test that some function is correctly raising a ValueError when we pass an invalid parameter and we want to ensure that the state is not changed. Now let’s consider that we do a mistake during a refactoring and the code ends up looking something like that:\ndef incorrect_function(state, arg): state[\"new_entry\"] = 42 if arg \u003c 1: raise ValueError() def test_complex_function_failure(): state = {} with pytest.raises(ValueError): incorrect_function(state, 0) assert state == {} So now in our newly refactored function, even when the passed value is incorrect we have a side effect and we modify the state. Thankfully, we will catch it with our unit-test suite right … ? Not really ! The test will pass happily despite the state being modified ! So what is happening here ?\nThis is actually documented but can be easily missed: the assert is actually never evaluated as it is inside the pytest.raises context manager but after the line raising the exception. The fix is quite easy and is to move the assert out of scope of the context manager:\ndef incorrect_function(state, arg): state[\"new_entry\"] = 42 if arg \u003c 1: raise ValueError() def test_complex_function_failure(): state = {} with pytest.raises(ValueError): incorrect_function(state, 0) assert state == {} But why ? 🕵️ To understand a bit more what is happening, we have to understand how context managers are working. If we look at pytest.raise source code, we see that is quite a classic implementatin of a context manager with a class defining both __enter__ and __exit__ methods. Context manager’s __exit__ method have a quite interresting behavior: if the return value is True (or truthy), it will supress any exception raised. And it’s exactly how the pytest.raises method is implemented, it will check that there’s an exception and that it’s the correct type (which we can verify the the exc_type argument) and will fail the test otherwise.\nSyntactic sugar The last bit of information we need to have a complete picture is that context manager’s implementation in Python is a syntactic sugar of a try/except block. I highly recommend this article by Brett Cannon (and the whole serie about Python’s syntactic sugar) to understand Python’s statement more deeply !\nNow Let’s take back the example from the beginning containing the gotcha and simplify it a bit:\nwith pytest.raises(ValueError): raise ValueError() assert False And if we unwrap the context manager’ syntactic sugar, it becomes quite clear that the assert is dead code and will never be reached !\ncontext_manager = pytest.raises(ValueError) pytest_raise_enter = context_manager.__enter__ pytest_raise_exit = context_manager.__exit__ # We don't really use the ExceptionInfo returned by pytest _ = pytest_raise_enter() try: raise ValueError assert False # Our assert is dead code ! except: if not pytest_raise_exit(*sys.exc_info()): raise else: pytest_raise_exit(None, None, None) That’s a wrap 🌯 And that’s it for today ! And just to be clear, I absolutely recommend pytest as a test library, it’s great 🚀\nI hope you learned something !\n",
   "wordCount" : "600",
   "inLanguage": "en",
   "datePublished": "2022-01-19T17:43:08+01:00",
@@ -138,15 +139,15 @@ However, there&rsquo;s one small pitfall I noticed several times during code rev
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://halbow.me" accesskey="h" title="Halbow&#39;s  blog (Alt + H)">Halbow&#39;s  blog</a>
-            <span class="logo-switches">
+            <a href="https://halbow.me/" accesskey="h" title="Halbow&#39;s  blog (Alt + H)">Halbow&#39;s  blog</a>
+            <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
-                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
-                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
@@ -160,7 +161,7 @@ However, there&rsquo;s one small pitfall I noticed several times during code rev
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>
                 </button>
-            </span>
+            </div>
         </div>
         <ul id="menu">
         </ul>
@@ -171,7 +172,7 @@ However, there&rsquo;s one small pitfall I noticed several times during code rev
 <article class="post-single">
   <header class="post-header">
     
-    <h1 class="post-title">
+    <h1 class="post-title entry-hint-parent">
       Pytest Gotcha
     </h1>
     <div class="post-meta"><span title='2022-01-19 17:43:08 +0100 CET'>January 19, 2022</span>
@@ -186,7 +187,7 @@ Pytest will auto-discover the test function and run it, providing a detailed exp
     if arg &lt; 1:
         raise ValueError()
     else:
-        state[&quot;new_entry&quot;] = 42
+        state[&#34;new_entry&#34;] = 42
 
 
 def test_complex_function_failure():
@@ -197,7 +198,7 @@ def test_complex_function_failure():
 </code></pre><p>Basically what we are trying to do here is to test that some function is correctly raising a ValueError when we pass an invalid parameter
 and we want to ensure that the state is not changed. Now let&rsquo;s consider that we do a mistake during a refactoring and the code ends up looking something like that:</p>
 <pre tabindex="0"><code>def incorrect_function(state, arg):
-    state[&quot;new_entry&quot;] = 42
+    state[&#34;new_entry&#34;] = 42
     if arg &lt; 1:
         raise ValueError()
     
@@ -214,7 +215,7 @@ Thankfully, we will catch it with our unit-test suite right &hellip; ?
 the assert is actually never evaluated as it is inside the <code>pytest.raises</code> context manager but after the line raising the exception.
 The fix is quite easy and is to move the assert out of scope of the context manager:</p>
 <pre tabindex="0"><code>def incorrect_function(state, arg):
-    state[&quot;new_entry&quot;] = 42
+    state[&#34;new_entry&#34;] = 42
     if arg &lt; 1:
         raise ValueError()
 
@@ -238,13 +239,13 @@ I highly recommend this <a href="https://snarky.ca/unravelling-the-with-statemen
 <pre tabindex="0"><code>with pytest.raises(ValueError):
     raise ValueError()
     assert False
-</code></pre><p>And if we unwrap the context manager' syntactic sugar, it becomes quite clear that the assert is dead code and will never be reached !</p>
+</code></pre><p>And if we unwrap the context manager&rsquo; syntactic sugar, it becomes quite clear that the assert is dead code and will never be reached !</p>
 <pre tabindex="0"><code>
 context_manager = pytest.raises(ValueError)
 pytest_raise_enter = context_manager.__enter__
 pytest_raise_exit = context_manager.__exit__
 
-# We don't really use the ExceptionInfo returned by pytest
+# We don&#39;t really use the ExceptionInfo returned by pytest
 _ = pytest_raise_enter()
 
 try:
@@ -263,16 +264,19 @@ else:
   </div>
 
   <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="https://halbow.me">Halbow&#39;s  blog</a></span>
+        <span>&copy; 2024 <a href="https://halbow.me/">Halbow&#39;s  blog</a></span> · 
+
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
-        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
     </span>
 </footer>
 <a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">

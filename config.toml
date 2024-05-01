@@ -1,4 +1,4 @@
-baseURL = 'http://halbow.me'
+baseURL = 'https://halbow.me'
 languageCode = 'en-us'
 title = "Halbow's  blog"
 theme = "PaperMod"
