@@ -1,7 +1,7 @@
 ---
 title: "100% coverage or not"
 date: 2024-05-01T08:10:43+02:00
-draft: true
+draft: false
 ---
 
 #  🧵The debate
