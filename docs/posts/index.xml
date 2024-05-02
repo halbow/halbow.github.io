@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Halbow&#39;s  blog</description>
     <generator>Hugo -- 0.125.2</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jan 2024 19:04:32 +0100</lastBuildDate>
+    <lastBuildDate>Wed, 01 May 2024 08:10:43 +0200</lastBuildDate>
     <atom:link href="https://halbow.me/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>100% coverage or not</title>
+      <link>https://halbow.me/posts/coverage/</link>
+      <pubDate>Wed, 01 May 2024 08:10:43 +0200</pubDate>
+      <guid>https://halbow.me/posts/coverage/</guid>
+      <description>🧵The debate Whether targeting 100% coverage is worth it or not has been a long discussion in Software Engineering. For some people it&amp;rsquo;s very well worth the time to test everything while some other argue that it&amp;rsquo;s not worthwile to invest that much time and that some 80% or 90% is good enough. While it&amp;rsquo;s clearly a significant amount of work to reach this kind of threshold on a legacy/non-trivial codebase, I recently had to start a new project from scratch and asked myself the question: should I bother to aim for 100% coverage or should I settle for an arbitrary threshold like 90% ?</description>
+    </item>
     <item>
       <title>Syscall in Python</title>
       <link>https://halbow.me/posts/syscall-in-python/</link>
