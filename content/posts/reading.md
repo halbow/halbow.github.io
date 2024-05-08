@@ -4,7 +4,16 @@ date: 2024-05-02T10:59:54+02:00
 draft: true
 ---
 
-# Leargning Domain-Driven Design
+# The art of PostgreSQL
+
+# Learning Domain-Driven Design
+
+Really interresting overview of DDD.
+My main take away woudl be that:
+- You don't have to apply everything from DDD, you can choose which one
+- Port and adatper, clean arch, onion arch are more or less the same
+- Nice summary of different pattern: Transaction script, active record, domain model, event sourcing
+- Event sourcing is a nice way to discover domain knowledge even in non DDD project
 
 # Mastering API Architecture
 
@@ -32,10 +41,8 @@ draft: true
 
 # High Performance Networking
 
-Quite interresting books, explains soem very pracitcla implications of
-
-Latency in TCP will influence your throughput
-
+Quite interresting books, explains some very practical impact of networking on your application.
+One example is that the latency (rtt time) in TCP will limit your throughput due to the size of the sequence windows.
 
 
 
