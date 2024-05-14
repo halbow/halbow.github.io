@@ -1,5 +1,5 @@
 ---
-title: "100% coverage or not"
+title: "Is 100% coverage worth it ?"
 date: 2024-05-01T08:10:43+02:00
 draft: false
 ---
