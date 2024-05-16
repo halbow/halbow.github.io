@@ -33,6 +33,8 @@ My main take away woudl be that:
 
 # Architetcure Pattern with Python [ref](https://www.amazon.com/Architecture-Patterns-Python-Domain-Driven-Microservices/dp/1492052205/ref=as_li_ss_tl?keywords=Architecture+Patterns+with+Python&language=en_US&linkCode=sl1&linkId=485b120d70c0e6234511426b0e8adfc7&qid=1578941721&sr=8-1&tag=obethetesgoa-20)
 
+# microservice 2 Sam Newman
+
 # Python Testing with Pytest [ref](https://pragprog.com/titles/bopytest2/python-testing-with-pytest-second-edition/)
 
 # Test Driven Development [ref]()
