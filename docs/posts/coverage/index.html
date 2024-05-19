@@ -7,7 +7,7 @@
 <meta name="robots" content="index, follow">
 <title>Is 100% coverage worth it ? | Halbow&#39;s  blog</title>
 <meta name="keywords" content="">
-<meta name="description" content="🧵The debate Whether targeting 100% coverage is worth it or not has been a long discussion in Software Engineering. For some people it&rsquo;s very well worth the time to test everything while some other argue that it&rsquo;s not worthwile to invest that much time and that some 80% or 90% is good enough. While it&rsquo;s clearly a significant amount of work to reach this kind of threshold on a legacy/non-trivial codebase, I recently had to start a new project from scratch and asked myself the question: should I bother to aim for 100% coverage or should I settle for an arbitrary threshold like 90% ?">
+<meta name="description" content="🧵The debate The debate over targetting 100% code coverage has long divided software engineers. Some believe it&rsquo;s worth the time to test everything while others argue that aiming 80% or 90% is sufficient. Achieving such high coverage is clearly a significant amount of work, especially on a legacy/non-trivial codebase. I recently had to start a new project from scratch and asked myself the question: should I bother to aim for 100% coverage or should I settle for an arbitrary threshold like 90% ?">
 <meta name="author" content="">
 <link rel="canonical" href="https://halbow.me/posts/coverage/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
@@ -59,7 +59,7 @@
   
 
 <meta property="og:title" content="Is 100% coverage worth it ?" />
-<meta property="og:description" content="🧵The debate Whether targeting 100% coverage is worth it or not has been a long discussion in Software Engineering. For some people it&rsquo;s very well worth the time to test everything while some other argue that it&rsquo;s not worthwile to invest that much time and that some 80% or 90% is good enough. While it&rsquo;s clearly a significant amount of work to reach this kind of threshold on a legacy/non-trivial codebase, I recently had to start a new project from scratch and asked myself the question: should I bother to aim for 100% coverage or should I settle for an arbitrary threshold like 90% ?" />
+<meta property="og:description" content="🧵The debate The debate over targetting 100% code coverage has long divided software engineers. Some believe it&rsquo;s worth the time to test everything while others argue that aiming 80% or 90% is sufficient. Achieving such high coverage is clearly a significant amount of work, especially on a legacy/non-trivial codebase. I recently had to start a new project from scratch and asked myself the question: should I bother to aim for 100% coverage or should I settle for an arbitrary threshold like 90% ?" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://halbow.me/posts/coverage/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-05-01T08:10:43+02:00" />
@@ -67,7 +67,7 @@
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Is 100% coverage worth it ?"/>
-<meta name="twitter:description" content="🧵The debate Whether targeting 100% coverage is worth it or not has been a long discussion in Software Engineering. For some people it&rsquo;s very well worth the time to test everything while some other argue that it&rsquo;s not worthwile to invest that much time and that some 80% or 90% is good enough. While it&rsquo;s clearly a significant amount of work to reach this kind of threshold on a legacy/non-trivial codebase, I recently had to start a new project from scratch and asked myself the question: should I bother to aim for 100% coverage or should I settle for an arbitrary threshold like 90% ?"/>
+<meta name="twitter:description" content="🧵The debate The debate over targetting 100% code coverage has long divided software engineers. Some believe it&rsquo;s worth the time to test everything while others argue that aiming 80% or 90% is sufficient. Achieving such high coverage is clearly a significant amount of work, especially on a legacy/non-trivial codebase. I recently had to start a new project from scratch and asked myself the question: should I bother to aim for 100% coverage or should I settle for an arbitrary threshold like 90% ?"/>
 
 
 <script type="application/ld+json">
@@ -96,12 +96,12 @@
   "@type": "BlogPosting",
   "headline": "Is 100% coverage worth it ?",
   "name": "Is 100% coverage worth it ?",
-  "description": "🧵The debate Whether targeting 100% coverage is worth it or not has been a long discussion in Software Engineering. For some people it\u0026rsquo;s very well worth the time to test everything while some other argue that it\u0026rsquo;s not worthwile to invest that much time and that some 80% or 90% is good enough. While it\u0026rsquo;s clearly a significant amount of work to reach this kind of threshold on a legacy/non-trivial codebase, I recently had to start a new project from scratch and asked myself the question: should I bother to aim for 100% coverage or should I settle for an arbitrary threshold like 90% ?",
+  "description": "🧵The debate The debate over targetting 100% code coverage has long divided software engineers. Some believe it\u0026rsquo;s worth the time to test everything while others argue that aiming 80% or 90% is sufficient. Achieving such high coverage is clearly a significant amount of work, especially on a legacy/non-trivial codebase. I recently had to start a new project from scratch and asked myself the question: should I bother to aim for 100% coverage or should I settle for an arbitrary threshold like 90% ?",
   "keywords": [
     
   ],
-  "articleBody": "🧵The debate Whether targeting 100% coverage is worth it or not has been a long discussion in Software Engineering. For some people it’s very well worth the time to test everything while some other argue that it’s not worthwile to invest that much time and that some 80% or 90% is good enough. While it’s clearly a significant amount of work to reach this kind of threshold on a legacy/non-trivial codebase, I recently had to start a new project from scratch and asked myself the question: should I bother to aim for 100% coverage or should I settle for an arbitrary threshold like 90% ? But before answering the question let’s discuss about coverage 🤓\n📖 100% coverage is not the holy grail of testing First thing we have to clarify is that most of the time, when a library or a application claims to have 100% code coverage, they mean 100% line/statement coverage. What this means is that the tests ran over all the line/statements in the codebase. The difference between a line and a statement is quite minimal, only in some case, this can make the computation of the percentage vary a bit, consider this example:\ndef some_function(flag): do_something();print(\"Finished\") With statement coverage it will correctly notice that the tests run over (or didn’t) two statements and not only one line ! This has probably more impact in other language as in Python this pretty rare to arraneg code this way (and to use semi colon 😁)\n⚠️ Limitations of (statement) coverage While 100% statement coverage is nice, there’s a few cases where it can have suprising result:\ndef weird_div(flag=True): a = 0 if flag: a += 1 return 1 / a This snippet will pass with 100% statement coverage if called with weird_div() but will fail if you call weird_div(False) ! With coverage you can enable branch coverage to make sure your tests run over the main branches/paths of your code. This will catch simple usecases like this where the code jumps conditionnaly over a few lines of code.\nWhile 100% branch coverage is clearly indicates that you have a good coverage of the code, this doesn’t mean that the code is not buggy and unfortunately as soon as you start to have some more complex usecase, coverage will not save you. You can find a bunch of example of the limitations of branch coverage here.\n💯 Why you should aim for 100% coverage report The main reason I like to keep 100% branch coverage in my project (and enforce it in the CI) is not really for the existing codebase but for all the future code that will be written. When you settle for an arbitrary threshold like 80%, while this is a pretty good metric for the existing codebase, this means that you only require the new code to be tested at 80%. A new merge request adding 100 statements that only tests 80 of it would be likely to pass this.\nOne could argue that 100% coverage is still un-neccessary work because maybe the engineer decided that it wasn’t worth it to test these 2 functions and that with 100% coverage the engineer would spend time writing test just for the coverage to pass. The problem with this is that you don’t really know if it’s a conscious choice or an oversight from the engineers when doing the review. And if you do, you certainly won’t in 6 months.\nIMO the best of both world is 100% coverage report. This doesn’t mean you have to test all the lines of code but that you report needs to stay at 100%. With a big incentive to ignore all the lines/files/functions you don’t want to test. This means you don’t have to spend the time writting useless tests to reach the coverage but you are forced to think about it. And this make the choice not to test some function/part of the code explicit.\n",
-  "wordCount" : "657",
+  "articleBody": "🧵The debate The debate over targetting 100% code coverage has long divided software engineers. Some believe it’s worth the time to test everything while others argue that aiming 80% or 90% is sufficient. Achieving such high coverage is clearly a significant amount of work, especially on a legacy/non-trivial codebase. I recently had to start a new project from scratch and asked myself the question: should I bother to aim for 100% coverage or should I settle for an arbitrary threshold like 90% ?\nBut before answering the question let’s discuss about coverage 🤓\n📖 100% coverage is not the holy grail of testing First, let’s clarify that when a library or a application claims 100% code coverage, it typically means 100% line or statement coverage. This means the tests execute every line/statements in the codebase. The difference between a line and a statement is usually minimal, consider this example:\ndef some_function(flag): do_something();print(\"Finished\") Statement coverage recognizes that two statements, not just one line, are executed ! This distinction can slightly affects the coverage percentage, though it’s rare in Python due to the infrequent use of semicolons 😁 !\n⚠️ Limitations of (statement) coverage While 100% statement coverage sounds great, it has limitations. Consider this example:\ndef weird_div(flag=True): a = 0 if flag: a += 1 return 1 / a Running coverage on this snippet will pass with 100% statement coverage if called with weird_div(). But if you run the test with weird_div(False), not only you will not reach 100% coverage but the test will fail as well 😅 ! With coverage you can enable branch coverage to make sure your tests run over the main branches/paths of your code. This will catch simple usecases like this where the code jumps conditionnaly over a few lines of code.\nWhile 100% branch coverage can indicate that you have a good coverage, if doesn’t mean the code is bug free and unfortunately as soon as you start to have some more complex usecase, even branch coverage will not save you. You can find a bunch of example of the limitations of branch coverage here.\n💯 Why you should aim for 100% coverage report One common argument against 100% coverage is that it might not be the best use of an engineer’s time, potentially leading to the creation of unnecessary tests. Engineers might want to intentionally skip testing certain functions if they think it’s not worth it. The issue with this approach is that you cannot tell easily if this was a deliberate choice or an oversight. Six months later, it’s unlikely anyone will remember the reasoning behind these decisions.\nThe main reason I still like to keep 100% branch coverage in my project (and enforce it in the CI) is not really for the existing codebase but for all the future code that will be written. When you settle for an arbitrary threshold like 80%, while this is a pretty good metric for the existing codebase, this means that you only require the new code to be tested at 80%. A new merge request adding 100 statements that only tests 80 of it would be likely to pass this.\nThe best approach, in my opinion, is to aim for a 100% coverage report. This doesn’t mean testing every single line of code, but rather ensuring the overall report stay at 100% by explicitely ignoring the lines, functions, or file you choose to exclude from coverage.\nThis approach forces you to consider which parts of the code should be tested, makes the decision to ignore code explicit by documenting it in the code and it ensures that you won’t accept future code that is only 80% tested because of an arbitrary limit.\n",
+  "wordCount" : "617",
   "inLanguage": "en",
   "datePublished": "2024-05-01T08:10:43+02:00",
   "dateModified": "2024-05-01T08:10:43+02:00",
@@ -177,49 +177,47 @@
 </div>
   </header> 
   <div class="post-content"><h1 id="the-debate">🧵The debate<a hidden class="anchor" aria-hidden="true" href="#the-debate">#</a></h1>
-<p>Whether targeting 100% coverage is worth it or not has been a long discussion in Software Engineering.
-For some people it&rsquo;s very well worth the time to test everything while some other argue that it&rsquo;s
-not worthwile to invest that much time and that some 80% or 90% is good enough. While it&rsquo;s clearly
-a significant amount of work to reach this kind of threshold on a legacy/non-trivial codebase, I recently
-had to start a new project from scratch and asked myself the question: should I bother to aim for 100%
-coverage or should I settle for an arbitrary threshold like 90% ? But before answering the question let&rsquo;s
-discuss about coverage 🤓</p>
+<p>The debate over targetting 100% code coverage has long divided software engineers.
+Some believe it&rsquo;s worth the time to test everything while others argue that aiming
+80% or 90% is sufficient. Achieving such high coverage is clearly a significant amount of work, especially
+on a legacy/non-trivial codebase. I recently had to start a new project from scratch and asked myself the question:
+should I bother to aim for 100% coverage or should I settle for an arbitrary threshold like 90% ?</p>
+<p>But before answering the question let&rsquo;s discuss about coverage 🤓</p>
 <h1 id="-100-coverage-is-not-the-holy-grail-of-testing">📖 100% coverage is not the holy grail of testing<a hidden class="anchor" aria-hidden="true" href="#-100-coverage-is-not-the-holy-grail-of-testing">#</a></h1>
-<p>First thing we have to clarify is that most of the time, when a library or a application
-claims to have 100% code coverage, they mean 100% line/statement coverage. What this means is that
-the tests ran over all the line/statements in the codebase. The difference between a line and a statement
-is quite minimal, only in some case, this can make the computation of the percentage vary a bit, consider this example:</p>
+<p>First, let&rsquo;s clarify that when a library or a application claims 100% code coverage,
+it typically means 100% line or statement coverage. This means the tests execute every line/statements in the codebase.
+The difference between a line and a statement is usually minimal, consider this example:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">some_function</span>(flag):
 </span></span><span style="display:flex;"><span>    do_something();print(<span style="color:#e6db74">&#34;Finished&#34;</span>)
-</span></span></code></pre></div><p>With statement coverage it will correctly notice that the tests run over (or didn&rsquo;t)
-two statements and not only one line ! This has probably more impact in other language
-as in Python this pretty rare to arraneg code this way (and to use semi colon 😁)</p>
+</span></span></code></pre></div><p>Statement coverage recognizes that two statements, not just one line, are executed ! This distinction
+can slightly affects the coverage percentage, though it&rsquo;s rare in Python due to the infrequent use of semicolons 😁 !</p>
 <h2 id="-limitations-of-statement-coverage">⚠️ Limitations of (statement) coverage<a hidden class="anchor" aria-hidden="true" href="#-limitations-of-statement-coverage">#</a></h2>
-<p>While 100% statement coverage is nice, there&rsquo;s a few cases where it can have suprising result:</p>
+<p>While 100% statement coverage sounds great, it has limitations. Consider this example:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">weird_div</span>(flag<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>):
 </span></span><span style="display:flex;"><span>    a <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> flag:
 </span></span><span style="display:flex;"><span>       a <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> a
-</span></span></code></pre></div><p>This snippet will pass with 100% statement coverage if called with <code>weird_div()</code> but will fail if you call <code>weird_div(False)</code> !
+</span></span></code></pre></div><p>Running <code>coverage</code> on this snippet will pass with 100% statement coverage if called with <code>weird_div()</code>. But if you run the test with
+<code>weird_div(False)</code>, not only you will not reach 100% coverage but the test will fail as well 😅 !
 With <a href="https://coverage.readthedocs.io/en/7.5.0/">coverage</a> you can enable branch coverage to make sure your tests run over the main branches/paths of your code.
 This will catch simple usecases like this where the code jumps conditionnaly over a few lines of code.</p>
-<p>While 100% branch coverage is clearly indicates that you have a good coverage of the code, this doesn&rsquo;t mean
-that the code is not buggy and unfortunately as soon as you start to have some more complex usecase, coverage will
-not save you. You can find a bunch of example of the limitations of branch coverage <a href="https://nedbatchelder.com/blog/200710/flaws_in_coverage_measurement.html">here</a>.</p>
+<p>While 100% branch coverage can indicate that you have a good coverage, if doesn&rsquo;t mean the code is bug free and
+unfortunately as soon as you start to have some more complex usecase, even branch coverage will not save you.
+You can find a bunch of example of the limitations of branch coverage <a href="https://nedbatchelder.com/blog/200710/flaws_in_coverage_measurement.html">here</a>.</p>
 <h1 id="-why-you-should-aim-for-100-coverage-report">💯 Why you should aim for 100% coverage report<a hidden class="anchor" aria-hidden="true" href="#-why-you-should-aim-for-100-coverage-report">#</a></h1>
-<p>The main reason I like to keep 100% branch coverage in my project (and enforce it in the CI) is not really for
+<p>One common argument against 100% coverage is that it might not be the best use of an engineer&rsquo;s time,
+potentially leading to the creation of unnecessary tests. Engineers might want to intentionally skip testing certain functions if they think it&rsquo;s not worth it.
+The issue with this approach is that you cannot tell easily if this was a deliberate choice or an oversight.
+Six months later, it’s unlikely anyone will remember the reasoning behind these decisions.</p>
+<p>The main reason I still like to keep 100% branch coverage in my project (and enforce it in the CI) is not really for
 the existing codebase but for all the future code that will be written. When you settle for an arbitrary threshold
 like 80%, while this is a pretty good metric for the existing codebase, this means that you only require the new
 code to be tested at 80%. A new merge request adding 100 statements that only tests 80 of it would be likely to pass this.</p>
-<p>One could argue that 100% coverage is still un-neccessary work because maybe the engineer decided that it wasn&rsquo;t worth it
-to test these 2 functions and that with 100% coverage the engineer would spend time writing test just for the coverage to pass.
-The problem with this is that you don&rsquo;t really know if it&rsquo;s a conscious choice or an oversight from the engineers when doing the review.
-And if you do, you certainly won&rsquo;t in 6 months.</p>
-<p>IMO the best of both world is 100% coverage <strong>report</strong>. This doesn&rsquo;t mean you have to test all the lines of code but that
-you report needs to stay at 100%. With a big incentive to ignore all the lines/files/functions you don&rsquo;t
-want to test. This means you don&rsquo;t have to spend the time writting useless tests to reach the coverage but you are forced
-to think about it. And this make the choice not to test some function/part of the code explicit.</p>
+<p>The best approach, in my opinion, is to aim for a 100% coverage <strong>report</strong>. This doesn&rsquo;t mean testing every single line of code,
+but rather ensuring the overall report stay at 100% by explicitely ignoring the lines, functions, or file you choose to exclude from coverage.</p>
+<p>This approach forces you to consider which parts of the code should be tested, makes the decision to ignore code explicit by documenting it in the code
+and it ensures that you won&rsquo;t accept future code that is only 80% tested because of an arbitrary limit.</p>
 
 
   </div>
