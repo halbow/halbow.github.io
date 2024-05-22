@@ -1,0 +1,36 @@
+menu:
+  main:
+    - identifier: archive
+      name: Archive
+      url: /posts/
+      weight: 10
+#    - identifier: books
+#      name: Books
+#      url: /books/
+#      weight: 20
+#    - identifier: about-me
+#      name: About me
+#      url: /about-me/index.md
+#      weight: 30
+
+
+
+params:
+#  homeInfoParams:
+#    Title: Hi there 👋
+#    Content: Can be Info, links, about...
+
+#  socialIcons: # optional
+#    - name: "Github"
+#      url: "https://github.com/halbow"
+#    - name: ""
+#      url: "<link2>"
+
+  #ShowReadingTime: true
+  ShowCodeCopyButtons: true
+
+
+baseURL: 'https://halbow.me'
+languageCode: 'en-us'
+title: "Halbow's  blog"
+theme: "PaperMod"
