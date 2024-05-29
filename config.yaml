@@ -8,10 +8,10 @@ menu:
 #      name: Books
 #      url: /books/
 #      weight: 20
-#    - identifier: about-me
-#      name: About me
-#      url: /about-me/index.md
-#      weight: 30
+    - identifier: about-me
+      name: About me
+      url: /about-me/
+      weight: 30
 
 
 
