@@ -14,5 +14,5 @@ and Scale-ups, where I've held position of Senior Backend Software Engineer and 
 
 ### Some open-source project I created:
 
-- [Atomik](https://github.com/halbow/atomik): Manipulate folder/files in an atomic way with context managerin Python
+- [Atomik](https://github.com/halbow/atomik): Manipulate folder/files in an atomic way with context manager in Python
 - [Struuuctify](https://github.com/halbow/structify): Rust-like structure in Python 
