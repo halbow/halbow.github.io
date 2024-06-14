@@ -4,6 +4,8 @@ date: 2024-05-02T10:59:54+02:00
 draft: true
 ---
 
+This page gathers my last reading and the main takeaways I got from the book
+
 # Modern Softare Engineering
 
 # The Devops handbook
@@ -50,7 +52,12 @@ My main take away woudl be that:
 
 # Test Driven Development [ref]()
 
+Really like this one, especially the concpet of pace
+Every programmer will be 
+
 # [Refactoring](https://martinfowler.com/books/refactoring.html)
+
+Dependency between tests and ability to refactor
 
 
 # High Performance Networking
@@ -59,6 +66,4 @@ Quite interresting books, explains some very practical impact of networking on y
 One example is that the latency (rtt time) in TCP will limit your throughput due to the size of the sequence windows.
 
 
-
-## Product 
 

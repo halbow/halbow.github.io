@@ -1,6 +1,6 @@
 ---
 title: "Is 100% coverage worth it ?"
-date: 2024-05-01T08:10:43+02:00
+date: 2024-06-14T08:10:43+02:00
 draft: false
 ---
 

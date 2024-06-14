@@ -6,21 +6,21 @@
     <description>Recent content on Halbow&#39;s  blog</description>
     <generator>Hugo -- 0.127.0</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 May 2024 08:18:36 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 14 Jun 2024 08:10:43 +0200</lastBuildDate>
     <atom:link href="https://halbow.me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Is 100% coverage worth it ?</title>
+      <link>https://halbow.me/posts/coverage/</link>
+      <pubDate>Fri, 14 Jun 2024 08:10:43 +0200</pubDate>
+      <guid>https://halbow.me/posts/coverage/</guid>
+      <description>🧵The debate The debate over targetting 100% code coverage has long divided software engineers. Some believe it&amp;rsquo;s worth the time to test everything while others argue that aiming 80% or 90% is sufficient. Achieving such high coverage is clearly a significant amount of work, especially on a legacy/non-trivial codebase. I recently had to start a new project from scratch and asked myself the question: should I bother to aim for 100% coverage or should I settle for an arbitrary threshold like 90% ?</description>
+    </item>
     <item>
       <title>Why I still write Synchronous APIs</title>
       <link>https://halbow.me/posts/sync-first/</link>
       <pubDate>Thu, 02 May 2024 08:18:36 +0200</pubDate>
       <guid>https://halbow.me/posts/sync-first/</guid>
       <description>Async programming in Python had a lot of attraction in the recent years. Python 3.4 was released in 2014 and added the asyncio module. This enabled a great way to write async code but came with a new syntax and most libraries that wanted to be compatible had to undergo a big rewrite to enable this (you can check the great post What color is your function to understand why). We&amp;rsquo;re now ten years after the first asyncio release, and while the ecosystem still feels a bit fragmented, most of the time you can find an async library for your usecase (either librairies have adopted async/await or new librairies were born to fill the gap).</description>
-    </item>
-    <item>
-      <title>Is 100% coverage worth it ?</title>
-      <link>https://halbow.me/posts/coverage/</link>
-      <pubDate>Wed, 01 May 2024 08:10:43 +0200</pubDate>
-      <guid>https://halbow.me/posts/coverage/</guid>
-      <description>🧵The debate The debate over targetting 100% code coverage has long divided software engineers. Some believe it&amp;rsquo;s worth the time to test everything while others argue that aiming 80% or 90% is sufficient. Achieving such high coverage is clearly a significant amount of work, especially on a legacy/non-trivial codebase. I recently had to start a new project from scratch and asked myself the question: should I bother to aim for 100% coverage or should I settle for an arbitrary threshold like 90% ?</description>
     </item>
     <item>
       <title>Syscall in Python</title>
