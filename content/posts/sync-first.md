@@ -1,7 +1,7 @@
 ---
 title: "Why I still write Synchronous APIs"
 date: 2024-05-02T08:18:36+02:00
-draft: true
+draft: false
 ---
 
 
@@ -34,8 +34,8 @@ by the GIL (but this might change in python 3.13, see [here](https://docs.python
 
 # ⚡️ FastAPI
 
-In the context of FastAPI, you can choose whether your endpoint are async or not by simply
-defining either an `async def`or a regular `def` for you endpoint:
+In the context of FastAPI, you can choose whether your endpoint are async or not, and FastAPI will automatically
+execute the async function on the event loop and the sync one in a threadpool ! To define the endpoint, simply use `async def`or a regular `def`:
 
 ```python
 @app.get("/")
@@ -49,9 +49,9 @@ def root():
     return {"message": "Hello World"}
 ```
 
-Async function will run within the event loop while sync function will run in a threadpool (thanks to asyncio support of run_in_thread)
+# 🚦 Blocking the event loop
 
-When choosing async functions in FASTPI, you are effectively using cooperative multitasking. While this means
+When choosing async functions in FastAPI, you are effectively using cooperative multitasking. While this means
 you can handle IO very effectively and scale to ten/hundred of request per second on a server, the downside is that every task needs to cooperate to
 achieve this level of concurrency. Practically, every new endpoint you write can block the event loop if you're not careful.
 
@@ -99,27 +99,34 @@ async def extract_info():
     return {"results": res}
 ```
 
-
-This also mean that every dependency you add in your code is also a liability.
- Even if the library is not supposed to do IO,
+This also mean that every dependency you add in your code is also a liability. Even if the library is not supposed to do IO,
 if there's somewhere down the code a call to `time.sleep` or if it's reading/loading some values from a file, you'll be doing
 synchronous IO blocking the event loop. You can argue that these are bad practice and should be fixed in the library, and you're probably right !
-But the bottom line is that you don't really know if the library is doing any of that without going through the code itslef.
+But the bottom line is that you don't really know if the call is doing any of that without going through the code itslef.
 And this breaks the "functional abstraction" that you normally get when calling a function.
 
 ```python
 @app.get("/")
 async def root():
-    # 
     some_library.some_method()
     return {"message": "Hello World"}
 ```
 
 
-FastAPi does provide the `fastapi.concurrency.run_in_threadpool` method which can helps in this situation (but it doesn't seem to be documented [yet](https://github.com/tiangolo/fastapi/issues/1066)
+FastAPi does provide the `fastapi.concurrency.run_in_threadpool` method which can helps in this situation (but it doesn't seem to be documented [yet](https://github.com/tiangolo/fastapi/issues/1066):
 
+```python
+@app.get("/")
+async def root():
+    run_in_threadpool(synchronous_code)
+    return {"message": "Hello World"}
+```
+
+
+<!---
 # Testing
 
+Another
 The two m ain
 Blocking the event loop is not something you easily catch in unit/integration tests as you are usually not running
 a large number of request.
@@ -127,25 +134,29 @@ a large number of request.
 No easy way to shift left and detect this earlier than in production oer in perofrmance test
 + you need to async all your tests
 
-# Conclusion: The Trade off
+-->
+# 🤝 The Trade off
 
 IMO async/await trade local complexity for global complexity. It's easier to read/write async function but
 the system as a whole become much more complex. In most case, I prefer to start a project in "sync mode" with FastAPI
 to avoid premature optimization. This make sense especially when you value velocity of development over performance.
-This is true in most B2B usecases where the number of client of your applications is not that big and the value relies 
+This is often the case when doing Business-to-Business apps where the number of client of your applications is lower and the value relies 
 more in the feature and specialization. And I can always improve performance for some endpoint later down the road if needed.
-
-# Conclusion
+This seems to be algined with the opinion with of FastAPI's creator according to [this discussion](https://github.com/tiangolo/fastapi/discussions/3099#discussioncomment-5179960)
 
 I wonder if it would be possible to have some kind of async/await concurrency without the limitation of cooperative multitasking.
-Whether it could be to statically detect functions blocking the event loop or having a timeout if the function runs for longer than some time bbut I don't see
-any way of doing this
- ? timeout if a function doesn't yeild execution for X ms/statements ?
+Whether it could be to statically detect functions blocking the event loop or having a timeout if the function runs for longer than some time but I don't see
+how this could be done.
+
+The concurrency model of Golang seems to be a pretty good trade-off, goroutines are very light thread managed by the golang runtime.
+Goroutines are cheap to create and context switch is managed by the go runtime which automatically switch when the code blocks on system calls (which means any IO).
+
+In some way it looks quite similar to spawning a threadpool and throwing async function to run there,
+if you don't take into account the CPU limitation due to the GIL and the fact the OS will manage teh context switching instead of the runtime.
 
 
-The concurrency model of Golang seems to be a good tradeoff, goroutine are very light thread managed by the golang runtime.
-Goroutine are cheap 
-whcih is some way is quite close to spawnign a threadpool and throwing async funciton to run there ?
+And that's it, see ya 👋
+
 
 
 

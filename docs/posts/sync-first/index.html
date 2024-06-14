@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Why I still write Synchronous APIs | Halbow&#39;s  blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="Async programming in Python had a lot of attraction in the recent years. Python 3.4 was released in 2014 and added the asyncio module. This enabled a great way to write async code but came with a new syntax and most libraries that wanted to be compatible had to undergo a big rewrite to enable this (you can check the great post What color is your function to understand why). We&rsquo;re now ten years after the first asyncio release, and while the ecosystem still feels a bit fragmented, most of the time you can find an async library for your usecase (either librairies have adopted async/await or new librairies were born to fill the gap).">
+<meta name="author" content="">
+<link rel="canonical" href="https://halbow.me/posts/sync-first/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://halbow.me/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://halbow.me/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://halbow.me/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://halbow.me/apple-touch-icon.png">
+<link rel="mask-icon" href="https://halbow.me/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://halbow.me/posts/sync-first/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:title" content="Why I still write Synchronous APIs" />
+<meta property="og:description" content="Async programming in Python had a lot of attraction in the recent years. Python 3.4 was released in 2014 and added the asyncio module. This enabled a great way to write async code but came with a new syntax and most libraries that wanted to be compatible had to undergo a big rewrite to enable this (you can check the great post What color is your function to understand why). We&rsquo;re now ten years after the first asyncio release, and while the ecosystem still feels a bit fragmented, most of the time you can find an async library for your usecase (either librairies have adopted async/await or new librairies were born to fill the gap)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://halbow.me/posts/sync-first/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-05-02T08:18:36+02:00" />
+<meta property="article:modified_time" content="2024-05-02T08:18:36+02:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Why I still write Synchronous APIs"/>
+<meta name="twitter:description" content="Async programming in Python had a lot of attraction in the recent years. Python 3.4 was released in 2014 and added the asyncio module. This enabled a great way to write async code but came with a new syntax and most libraries that wanted to be compatible had to undergo a big rewrite to enable this (you can check the great post What color is your function to understand why). We&rsquo;re now ten years after the first asyncio release, and while the ecosystem still feels a bit fragmented, most of the time you can find an async library for your usecase (either librairies have adopted async/await or new librairies were born to fill the gap)."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://halbow.me/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Why I still write Synchronous APIs",
+      "item": "https://halbow.me/posts/sync-first/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Why I still write Synchronous APIs",
+  "name": "Why I still write Synchronous APIs",
+  "description": "Async programming in Python had a lot of attraction in the recent years. Python 3.4 was released in 2014 and added the asyncio module. This enabled a great way to write async code but came with a new syntax and most libraries that wanted to be compatible had to undergo a big rewrite to enable this (you can check the great post What color is your function to understand why). We\u0026rsquo;re now ten years after the first asyncio release, and while the ecosystem still feels a bit fragmented, most of the time you can find an async library for your usecase (either librairies have adopted async/await or new librairies were born to fill the gap).",
+  "keywords": [
+    
+  ],
+  "articleBody": "Async programming in Python had a lot of attraction in the recent years. Python 3.4 was released in 2014 and added the asyncio module. This enabled a great way to write async code but came with a new syntax and most libraries that wanted to be compatible had to undergo a big rewrite to enable this (you can check the great post What color is your function to understand why). We’re now ten years after the first asyncio release, and while the ecosystem still feels a bit fragmented, most of the time you can find an async library for your usecase (either librairies have adopted async/await or new librairies were born to fill the gap).\nHowever when building a new API, most of the time I don’t go for async by default !\n📚 Async/await TLDR Async/await is a very efficient way to run IO-bound code concurrently. Note that concurrency means that your are able to overlap the execution of functions on a single thread, which is different from parralelism where you can execute multiples things at the same time on different threads.\nAsync/await works by running an event loop, which is basically a task scheduler (understand: a big loop) that will decide which task to run next. When a task is picked by the event loop, it starts and run until it reach an awaitstatement. This indicates that the task will perform some IO and the control can be yielded back to the event loop. The event loop is able to run another task while waiting for the first task’s IO to finish. You can take a look at this post to understand more how the event loop works by creating a dummy event loop based on generators !\nThis form of concurrency is called cooperative multitasking, meaning each task/functions needs to cooperate and yield back execution to the scheduler (event loop) for it to work well.\nNote that in both async and thread concurrency, if your tasks are CPU bounded, you’ll be limited by the GIL (but this might change in python 3.13, see here)\n⚡️ FastAPI In the context of FastAPI, you can choose whether your endpoint are async or not, and FastAPI will automatically execute the async function on the event loop and the sync one in a threadpool ! To define the endpoint, simply use async defor a regular def:\n@app.get(\"/\") async def root(): return {\"message\": \"Hello World\"} # Or @app.get(\"/\") def root(): return {\"message\": \"Hello World\"} 🚦 Blocking the event loop When choosing async functions in FastAPI, you are effectively using cooperative multitasking. While this means you can handle IO very effectively and scale to ten/hundred of request per second on a server, the downside is that every task needs to cooperate to achieve this level of concurrency. Practically, every new endpoint you write can block the event loop if you’re not careful.\nThis can happen for several reason, for example if you do synchronous IO:\n@app.get(\"/\") async def root(): # This will block the whole app for the time fo the request res = requests.get('https://example.com/some_url') return {\"result\": res} Or if your code call time.sleep\n@app.get(\"/\") async def root(): # Easy to spot here but might be much more difficult in a large codebase time.sleep(3) return {\"message\": \"Hello World\"} But also if you have some CPU-bound function that might run for a few seconds:\n@app.post(\"/\") async def compute_user_history(user_ids: int): res = {} # The whole loop will block the event loop # as we only store the result after the loop for user_id in users_id; res[results] = compute_user_history() await store(results) return And some innoncent looking code like a regex can also be CPU intensive:\n@app.get(\"/\") async def extract_info(): # A long regex that can potentieally block the event loop res = re.findall(some_complex_regex, large_text) return {\"results\": res} This also mean that every dependency you add in your code is also a liability. Even if the library is not supposed to do IO, if there’s somewhere down the code a call to time.sleep or if it’s reading/loading some values from a file, you’ll be doing synchronous IO blocking the event loop. You can argue that these are bad practice and should be fixed in the library, and you’re probably right ! But the bottom line is that you don’t really know if the call is doing any of that without going through the code itslef. And this breaks the “functional abstraction” that you normally get when calling a function.\n@app.get(\"/\") async def root(): some_library.some_method() return {\"message\": \"Hello World\"} FastAPi does provide the fastapi.concurrency.run_in_threadpool method which can helps in this situation (but it doesn’t seem to be documented yet:\n@app.get(\"/\") async def root(): run_in_threadpool(synchronous_code) return {\"message\": \"Hello World\"} 🤝 The Trade off IMO async/await trade local complexity for global complexity. It’s easier to read/write async function but the system as a whole become much more complex. In most case, I prefer to start a project in “sync mode” with FastAPI to avoid premature optimization. This make sense especially when you value velocity of development over performance. This is often the case when doing Business-to-Business apps where the number of client of your applications is lower and the value relies more in the feature and specialization. And I can always improve performance for some endpoint later down the road if needed. This seems to be algined with the opinion with of FastAPI’s creator according to this discussion\nI wonder if it would be possible to have some kind of async/await concurrency without the limitation of cooperative multitasking. Whether it could be to statically detect functions blocking the event loop or having a timeout if the function runs for longer than some time but I don’t see how this could be done.\nThe concurrency model of Golang seems to be a pretty good trade-off, goroutines are very light thread managed by the golang runtime. Goroutines are cheap to create and context switch is managed by the go runtime which automatically switch when the code blocks on system calls (which means any IO).\nIn some way it looks quite similar to spawning a threadpool and throwing async function to run there, if you don’t take into account the CPU limitation due to the GIL and the fact the OS will manage teh context switching instead of the runtime.\nAnd that’s it, see ya 👋\n",
+  "wordCount" : "1054",
+  "inLanguage": "en",
+  "datePublished": "2024-05-02T08:18:36+02:00",
+  "dateModified": "2024-05-02T08:18:36+02:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://halbow.me/posts/sync-first/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Halbow's  blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://halbow.me/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://halbow.me/" accesskey="h" title="Halbow&#39;s  blog (Alt + H)">Halbow&#39;s  blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://halbow.me/posts/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://halbow.me/about-me/" title="About me">
+                    <span>About me</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Why I still write Synchronous APIs
+    </h1>
+    <div class="post-meta"><span title='2024-05-02 08:18:36 +0200 CEST'>May 2, 2024</span>
+
+</div>
+  </header> 
+  <div class="post-content"><p>Async programming in Python had a lot of attraction in the recent years. Python 3.4
+was released in 2014 and added the asyncio module. This enabled a great way to write
+async code but came with a new syntax and most libraries that wanted to be compatible
+had to undergo a big rewrite to enable this (you can check the great post <a href="https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/">What color is your function</a>
+to understand why). We&rsquo;re now ten years after the first asyncio release, and while
+the ecosystem still feels a bit fragmented, most of the time you can find an async library
+for your usecase (either librairies have adopted async/await or new librairies were born to fill the gap).</p>
+<p>However when building a new API, most of the time I don&rsquo;t go for async by default !</p>
+<h1 id="-asyncawait-tldr">📚 Async/await TLDR<a hidden class="anchor" aria-hidden="true" href="#-asyncawait-tldr">#</a></h1>
+<p>Async/await is a very efficient way to run IO-bound code concurrently.
+Note that concurrency means that your are able to overlap the execution of functions on a single thread,
+which is different from parralelism where you can execute multiples things at the same time on different threads.</p>
+<p>Async/await works by running an event loop, which is basically a task scheduler (understand: a big loop) that will decide which task to run next.
+When a task is picked by the event loop, it starts and run until it reach an <code>await</code>statement. This indicates that the task
+will perform some IO and the control can be yielded back to the event loop. The event loop is able to run another task while waiting for the first task&rsquo;s IO to finish.
+You can take a look  at <a href="https://jacobpadilla.com/articles/recreating-asyncio">this post</a> to understand more how the event loop works by creating
+a dummy event loop based on generators !</p>
+<p>This form of concurrency is called cooperative multitasking, meaning each task/functions needs to cooperate
+and yield back execution to the scheduler (event loop) for it to work well.</p>
+<p>Note that in both async and thread concurrency, if your tasks are CPU bounded, you&rsquo;ll be limited
+by the GIL (but this might change in python 3.13, see <a href="https://docs.python.org/3.13/whatsnew/3.13.html#free-threaded-cpython">here</a>)</p>
+<h1 id="-fastapi">⚡️ FastAPI<a hidden class="anchor" aria-hidden="true" href="#-fastapi">#</a></h1>
+<p>In the context of FastAPI, you can choose whether your endpoint are async or not, and FastAPI will automatically
+execute the async function on the event loop and the sync one in a threadpool ! To define the endpoint, simply use <code>async def</code>or a regular <code>def</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6e22e">@app.get</span>(<span style="color:#e6db74">&#34;/&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">root</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;message&#34;</span>: <span style="color:#e6db74">&#34;Hello World&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Or</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@app.get</span>(<span style="color:#e6db74">&#34;/&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">root</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;message&#34;</span>: <span style="color:#e6db74">&#34;Hello World&#34;</span>}
+</span></span></code></pre></div><h1 id="-blocking-the-event-loop">🚦 Blocking the event loop<a hidden class="anchor" aria-hidden="true" href="#-blocking-the-event-loop">#</a></h1>
+<p>When choosing async functions in FastAPI, you are effectively using cooperative multitasking. While this means
+you can handle IO very effectively and scale to ten/hundred of request per second on a server, the downside is that every task needs to cooperate to
+achieve this level of concurrency. Practically, every new endpoint you write can block the event loop if you&rsquo;re not careful.</p>
+<p>This can happen for several reason, for example if you do synchronous IO:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6e22e">@app.get</span>(<span style="color:#e6db74">&#34;/&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">root</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># This will block the whole app for the time fo the request</span>
+</span></span><span style="display:flex;"><span>    res <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;https://example.com/some_url&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;result&#34;</span>: res}
+</span></span></code></pre></div><p>Or if your code call <code>time.sleep</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6e22e">@app.get</span>(<span style="color:#e6db74">&#34;/&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">root</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Easy to spot here but might be much more difficult in a large codebase</span>
+</span></span><span style="display:flex;"><span>    time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">3</span>) 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;message&#34;</span>: <span style="color:#e6db74">&#34;Hello World&#34;</span>}
+</span></span></code></pre></div><p>But also if you have some CPU-bound function that might run for a few seconds:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6e22e">@app.post</span>(<span style="color:#e6db74">&#34;/&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">compute_user_history</span>(user_ids: int):
+</span></span><span style="display:flex;"><span>    res <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># The whole loop will block the event loop </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># as we only store the result after the loop</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> user_id <span style="color:#f92672">in</span> users_id;
+</span></span><span style="display:flex;"><span>        res[results] <span style="color:#f92672">=</span> compute_user_history()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> store(results)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> 
+</span></span></code></pre></div><p>And some innoncent looking code like a regex can also be CPU intensive:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6e22e">@app.get</span>(<span style="color:#e6db74">&#34;/&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">extract_info</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># A long regex that can potentieally block the event loop</span>
+</span></span><span style="display:flex;"><span>    res <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(some_complex_regex, large_text)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;results&#34;</span>: res}
+</span></span></code></pre></div><p>This also mean that every dependency you add in your code is also a liability. Even if the library is not supposed to do IO,
+if there&rsquo;s somewhere down the code a call to <code>time.sleep</code> or if it&rsquo;s reading/loading some values from a file, you&rsquo;ll be doing
+synchronous IO blocking the event loop. You can argue that these are bad practice and should be fixed in the library, and you&rsquo;re probably right !
+But the bottom line is that you don&rsquo;t really know if the call is doing any of that without going through the code itslef.
+And this breaks the &ldquo;functional abstraction&rdquo; that you normally get when calling a function.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6e22e">@app.get</span>(<span style="color:#e6db74">&#34;/&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">root</span>():
+</span></span><span style="display:flex;"><span>    some_library<span style="color:#f92672">.</span>some_method()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;message&#34;</span>: <span style="color:#e6db74">&#34;Hello World&#34;</span>}
+</span></span></code></pre></div><p>FastAPi does provide the <code>fastapi.concurrency.run_in_threadpool</code> method which can helps in this situation (but it doesn&rsquo;t seem to be documented <a href="https://github.com/tiangolo/fastapi/issues/1066">yet</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6e22e">@app.get</span>(<span style="color:#e6db74">&#34;/&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">root</span>():
+</span></span><span style="display:flex;"><span>    run_in_threadpool(synchronous_code)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;message&#34;</span>: <span style="color:#e6db74">&#34;Hello World&#34;</span>}
+</span></span></code></pre></div><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h1 id="-the-trade-off">🤝 The Trade off<a hidden class="anchor" aria-hidden="true" href="#-the-trade-off">#</a></h1>
+<p>IMO async/await trade local complexity for global complexity. It&rsquo;s easier to read/write async function but
+the system as a whole become much more complex. In most case, I prefer to start a project in &ldquo;sync mode&rdquo; with FastAPI
+to avoid premature optimization. This make sense especially when you value velocity of development over performance.
+This is often the case when doing Business-to-Business apps where the number of client of your applications is lower and the value relies
+more in the feature and specialization. And I can always improve performance for some endpoint later down the road if needed.
+This seems to be algined with the opinion with of FastAPI&rsquo;s creator according to <a href="https://github.com/tiangolo/fastapi/discussions/3099#discussioncomment-5179960">this discussion</a></p>
+<p>I wonder if it would be possible to have some kind of async/await concurrency without the limitation of cooperative multitasking.
+Whether it could be to statically detect functions blocking the event loop or having a timeout if the function runs for longer than some time but I don&rsquo;t see
+how this could be done.</p>
+<p>The concurrency model of Golang seems to be a pretty good trade-off, goroutines are very light thread managed by the golang runtime.
+Goroutines are cheap to create and context switch is managed by the go runtime which automatically switch when the code blocks on system calls (which means any IO).</p>
+<p>In some way it looks quite similar to spawning a threadpool and throwing async function to run there,
+if you don&rsquo;t take into account the CPU limitation due to the GIL and the fact the OS will manage teh context switching instead of the runtime.</p>
+<p>And that&rsquo;s it, see ya 👋</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://halbow.me/">Halbow&#39;s  blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

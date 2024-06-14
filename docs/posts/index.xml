@@ -4,10 +4,17 @@
     <title>Posts on Halbow&#39;s  blog</title>
     <link>https://halbow.me/posts/</link>
     <description>Recent content in Posts on Halbow&#39;s  blog</description>
-    <generator>Hugo -- 0.126.2</generator>
+    <generator>Hugo -- 0.127.0</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 May 2024 08:10:43 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 02 May 2024 08:18:36 +0200</lastBuildDate>
     <atom:link href="https://halbow.me/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Why I still write Synchronous APIs</title>
+      <link>https://halbow.me/posts/sync-first/</link>
+      <pubDate>Thu, 02 May 2024 08:18:36 +0200</pubDate>
+      <guid>https://halbow.me/posts/sync-first/</guid>
+      <description>Async programming in Python had a lot of attraction in the recent years. Python 3.4 was released in 2014 and added the asyncio module. This enabled a great way to write async code but came with a new syntax and most libraries that wanted to be compatible had to undergo a big rewrite to enable this (you can check the great post What color is your function to understand why). We&amp;rsquo;re now ten years after the first asyncio release, and while the ecosystem still feels a bit fragmented, most of the time you can find an async library for your usecase (either librairies have adopted async/await or new librairies were born to fill the gap).</description>
+    </item>
     <item>
       <title>Is 100% coverage worth it ?</title>
       <link>https://halbow.me/posts/coverage/</link>
