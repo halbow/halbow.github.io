@@ -68,6 +68,9 @@ but rather ensuring the overall report stay at 100% by explicitely ignoring the 
 This approach forces you to consider which parts of the code should be tested, makes the decision to ignore code explicit by documenting it in the code
 and it ensures that you won't accept future code that is only 80% tested because of an arbitrary limit.
 
+Another benfit is that it can help you remove useless code. If you write some code that you don't need yet,
+you will see it in the coverage report and most of the time when asking myslef if I should test it or not, I ended
+up removing the code altogether. Less code is always good 😁
 
 
 
