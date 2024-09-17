@@ -12,7 +12,7 @@ recommend to watch the talk if you feel the same ! But I recently learned that w
 
 The usecase we had looked very similar to the example in the talk, a simplified verison would look like this:
 
-```
+```python
 class OutputConvertr(abc.ABC):
     @abc.abstractmethod
     def convert_file(self, working_dir: Path, file: str):
@@ -34,7 +34,7 @@ class CsvConverter(OutputConverter):
 
 When seeing this example in code review, it really felt like we could apply almost exactly the same principle and re-write this like:
 
-```
+```python
 class FileConvertor(Protocol):
     def convert_file(self, working_dir: Path, file: str):
         ...
@@ -64,7 +64,7 @@ I was ready to add a suggestion to improve the code in this way when I realized 
 
 We use dependency injection heavily in our codebase and most of our core logic looks like this (nothing out of ordinary if you are familiar with Clean Architecture and its principle):
 
-```
+```python
 class SomeUsecase:
     @inject
     def __init__(self, some_service: SomeService):
@@ -76,7 +76,7 @@ class SomeUsecase:
 ```
 And in this case, the the design with inheritance makes it easier to have different usecase with different converter
 as the dependency injection knows which class to inject directly:
-``` 
+```python
 class SomeUsecase:
     @inject
     def __init__(self, converter: XmlConverter):
@@ -103,7 +103,7 @@ cannot be instanciated easily by the Dependency Injector framework (we use [inje
 as it doesn't know which `FileConveter` to use and even if it did,
 it would need to bind multiple implementation of the same interface for each converter
 
-```
+```python
 from injector import inject
 
 class SomeUsecase:
@@ -120,7 +120,7 @@ class SomeUsecase:
 The main workaround I found to tackle this is to make the `Converter` class generic:
 
 (We can use the [new syntax for generic](https://peps.python.org/pep-0695/) introduced in Python 3.2 😎)
-```
+```python
 class OutputConverter[T: FileConvertor]:
     def __init__(self, converter: T):
         self.converter = converter
@@ -133,7 +133,7 @@ class OutputConverter[T: FileConvertor]:
 
 And ideally we could use it in our usecase like this:
 
-```
+```python
 class SomeUsecase:
     @inject
     def __init__(self, converter: OutputConverter[XmlConverter]):  
@@ -148,7 +148,7 @@ class SomeUsecase:
 Unfortunately it's not something supported yet with the injector library (see [here](https://github.com/python-injector/injector/issues/175)) and
 the only way I foudn to make ti work require quite a bit more code: we have to implement explicitely a class for each `Converter` type and we have 
 to manually add it to the injector's binder (again for each converter type):
-```
+```python
 class XmlOutputConverter(OutputConverter[XmlConverter]):
    pass
 

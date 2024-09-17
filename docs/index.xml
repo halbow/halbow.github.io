@@ -4,7 +4,7 @@
     <title>Halbow&#39;s  blog</title>
     <link>https://halbow.me/</link>
     <description>Recent content on Halbow&#39;s  blog</description>
-    <generator>Hugo -- 0.127.0</generator>
+    <generator>Hugo -- 0.134.1</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 14 Jun 2024 08:10:43 +0200</lastBuildDate>
     <atom:link href="https://halbow.me/index.xml" rel="self" type="application/rss+xml" />
@@ -13,45 +13,72 @@
       <link>https://halbow.me/posts/coverage/</link>
       <pubDate>Fri, 14 Jun 2024 08:10:43 +0200</pubDate>
       <guid>https://halbow.me/posts/coverage/</guid>
-      <description>🧵The debate The debate over targetting 100% code coverage has long divided software engineers. Some believe it&amp;rsquo;s worth the time to test everything while others argue that aiming 80% or 90% is sufficient. Achieving such high coverage is clearly a significant amount of work, especially on a legacy/non-trivial codebase. I recently had to start a new project from scratch and asked myself the question: should I bother to aim for 100% coverage or should I settle for an arbitrary threshold like 90% ?</description>
+      <description>&lt;h1 id=&#34;the-debate&#34;&gt;🧵The debate&lt;/h1&gt;
+&lt;p&gt;The debate over targetting 100% code coverage has long divided software engineers.
+Some believe it&amp;rsquo;s worth the time to test everything while others argue that aiming
+80% or 90% is sufficient. Achieving such high coverage is clearly a significant amount of work, especially
+on a legacy/non-trivial codebase. I recently had to start a new project from scratch and asked myself the question:
+should I bother to aim for 100% coverage or should I settle for an arbitrary threshold like 90% ?&lt;/p&gt;</description>
     </item>
     <item>
       <title>Why I still write Synchronous APIs</title>
       <link>https://halbow.me/posts/sync-first/</link>
       <pubDate>Thu, 02 May 2024 08:18:36 +0200</pubDate>
       <guid>https://halbow.me/posts/sync-first/</guid>
-      <description>Async programming in Python had a lot of attraction in the recent years. Python 3.4 was released in 2014 and added the asyncio module. This enabled a great way to write async code but came with a new syntax and most libraries that wanted to be compatible had to undergo a big rewrite to enable this (you can check the great post What color is your function to understand why). We&amp;rsquo;re now ten years after the first asyncio release, and while the ecosystem still feels a bit fragmented, most of the time you can find an async library for your usecase (either librairies have adopted async/await or new librairies were born to fill the gap).</description>
+      <description>&lt;p&gt;Async programming in Python had a lot of attraction in the recent years. Python 3.4
+was released in 2014 and added the asyncio module. This enabled a great way to write
+async code but came with a new syntax and most libraries that wanted to be compatible
+had to undergo a big rewrite to enable this (you can check the great post &lt;a href=&#34;https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/&#34;&gt;What color is your function&lt;/a&gt;
+to understand why). We&amp;rsquo;re now ten years after the first asyncio release, and while
+the ecosystem still feels a bit fragmented, most of the time you can find an async library
+for your usecase (either librairies have adopted async/await or new librairies were born to fill the gap).&lt;/p&gt;</description>
     </item>
     <item>
       <title>Syscall in Python</title>
       <link>https://halbow.me/posts/syscall-in-python/</link>
       <pubDate>Tue, 09 Jan 2024 19:04:32 +0100</pubDate>
       <guid>https://halbow.me/posts/syscall-in-python/</guid>
-      <description>What is a Syscall ? 🔎 Syscall are the main way for program to communicate with the Operating System. Program usually run in userspace and are limited in the action they can do. For safety reason many low level actions are handled by the kernel. As soon as you want to do something meaningful (print something to stdout, read something from a hard drive, send something on the network, etc) you have to make a syscall to communicat with the kernel to do it.</description>
+      <description>&lt;h2 id=&#34;what-is-a-syscall--&#34;&gt;What is a Syscall ? 🔎&lt;/h2&gt;
+&lt;p&gt;Syscall are the main way for program to communicate with the Operating System. Program
+usually run in userspace and are limited in the action they can do. For safety reason many low level
+actions are handled by the kernel. As soon as you want to do something meaningful (print something to stdout,
+read something from a hard drive, send something on the network, etc) you have to make a syscall to communicat
+with the kernel to do it.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Composition and Dependency Injection</title>
       <link>https://halbow.me/posts/composition-and-dependency-injection/</link>
       <pubDate>Mon, 06 Nov 2023 19:55:21 +0100</pubDate>
       <guid>https://halbow.me/posts/composition-and-dependency-injection/</guid>
-      <description>Back at Europython this year, I attended this very good talk on composition by Hynek Schlawack, which clicked on many level with how I code nowadays. I was never a huge fan of oriented object programming and inheritance in particular. I really recommend to watch the talk if you feel the same ! But I recently learned that when trying to apply composition together with dependency injection, things can become a bit more complex 😶</description>
+      <description>&lt;p&gt;Back at Europython this year, I attended this very good &lt;a href=&#34;https://www.youtube.com/watch?v=2qpW1-7TnzA&#34;&gt;talk&lt;/a&gt; on composition by &lt;a href=&#34;https://hynek.me&#34;&gt;Hynek Schlawack&lt;/a&gt;,
+which clicked on many level with how I code nowadays. I was never a huge fan of oriented object programming and inheritance in particular. I really
+recommend to watch the talk if you feel the same ! But I recently learned that when trying to apply composition together with dependency injection, things can become a bit more complex 😶&lt;/p&gt;</description>
     </item>
     <item>
       <title>Pytest Gotcha</title>
       <link>https://halbow.me/posts/pytest-gotcha/</link>
       <pubDate>Wed, 19 Jan 2022 17:43:08 +0100</pubDate>
       <guid>https://halbow.me/posts/pytest-gotcha/</guid>
-      <description>Pytest is a great library and has become my default choice for any testing I have to do in Python. It&amp;rsquo;s really easy to start with it, just create some function starting with test_ containing some assert inside a file and run pytest on this file. Pytest will auto-discover the test function and run it, providing a detailed explanation in case of failure !
-However, there&amp;rsquo;s one small pitfall I noticed several times during code review, which is the following usage:</description>
+      <description>&lt;p&gt;&lt;a href=&#34;https://docs.pytest.org/en/6.2.x/&#34;&gt;Pytest&lt;/a&gt; is a great library and has become my default choice for any testing I have to do in Python.
+It&amp;rsquo;s really easy to start with it, just create some function starting with &lt;code&gt;test_&lt;/code&gt; containing  some assert inside a file and run pytest on this file.
+Pytest will auto-discover the test function and run it, providing a detailed explanation in case of failure !&lt;/p&gt;
+&lt;p&gt;However, there&amp;rsquo;s one small pitfall I noticed several times during code review, which is the following usage:&lt;/p&gt;</description>
     </item>
     <item>
       <title></title>
       <link>https://halbow.me/about-me/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://halbow.me/about-me/</guid>
-      <description>Hi, I&amp;rsquo;m Halbow ! I&amp;rsquo;m an Software Engineer with 8+ years of experience ! I&amp;rsquo;ve mainly worked in high growth Startups and Scale-ups, where I&amp;rsquo;ve held position of Senior Backend Software Engineer and Tech Lead/Lead Engineers !
-Main focus of interest: Python Web development: I&amp;rsquo;ve been building scalable web application with Python for the majority of my career
-Software Architecture: I have extensive experience with clean architecture and domain-driven design (DDD)</description>
+      <description>&lt;h1 id=&#34;hi-im-halbow-&#34;&gt;Hi, I&amp;rsquo;m Halbow !&lt;/h1&gt;
+&lt;p&gt;I&amp;rsquo;m an Software Engineer with 8+ years of experience ! I&amp;rsquo;ve mainly worked in high growth Startups
+and Scale-ups, where I&amp;rsquo;ve held position of Senior Backend Software Engineer and Tech Lead/Lead Engineers !&lt;/p&gt;
+&lt;h3 id=&#34;main-focus-of-interest&#34;&gt;Main focus of interest:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Python Web development&lt;/strong&gt;: I&amp;rsquo;ve been building scalable web application with Python for the majority of my career&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Software Architecture&lt;/strong&gt;: I have extensive experience with clean architecture and domain-driven design (DDD)&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

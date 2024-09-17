@@ -6,6 +6,8 @@ draft: true
 
 This page gathers my last reading and the main takeaways I got from the book
 
+
+
 # Modern Softare Engineering
 
 # The Devops handbook
@@ -19,7 +21,7 @@ This page gathers my last reading and the main takeaways I got from the book
 Really interresting overview of DDD.
 My main take away woudl be that:
 - You don't have to apply everything from DDD, you can choose which one
-- Port and adatper, clean arch, onion arch are more or less the same
+- Port and adatper, clean arch, onion arch are more or less the same idea 
 - Nice summary of different pattern: Transaction script, active record, domain model, event sourcing
 - Event sourcing is a nice way to discover domain knowledge even in non DDD project
 
@@ -28,7 +30,6 @@ My main take away woudl be that:
 # Lean Startup
 
 # Mastering API Architecture
-
 
 # Software Engineering at Google
 
@@ -50,9 +51,11 @@ My main take away woudl be that:
 
 # Python Testing with Pytest [ref](https://pragprog.com/titles/bopytest2/python-testing-with-pytest-second-edition/)
 
+
+
 # Test Driven Development [ref]()
 
-Really like this one, especially the concpet of pace
+Really like this one, especially the concept of pace with TDD.
 Every programmer will be 
 
 # [Refactoring](https://martinfowler.com/books/refactoring.html)
