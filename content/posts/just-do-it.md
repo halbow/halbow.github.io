@@ -9,7 +9,7 @@ If you've ever maintained a Makefile just to alias a few shell commands, [Just](
 
 I've been using it for a while now and *just* wanted to share why I like it so much.
 
-# What is Just ? 🕵️
+## What is Just ? 🕵️
 
 Just is a command runner, which is simply a tool that helps you run commands. Usually it's a file where you define some commands
 and how to run them:
@@ -30,7 +30,7 @@ all the good things you could do with `make` without the historical complexity. 
 reuse other justfiles, etc.
 
 
-# Why would you want to use command runners ?
+## Why would you want to use command runners ?
 
 They come with many advantages:
 
@@ -61,9 +61,11 @@ No need to remember which package manager an application is using if you just ha
 Moreover, if you want to switch tools, let's say migrate from `poetry` to `uv`, you can do it while keeping
 the same command and avoid interfering with the flow of other developers (besides maybe installing the tool in some cases).
 
-# Some cool features of Just
+## Some cool features of Just
 
-Params are easy to handle:
+Here's a few things I really like about Just
+
+### Easy parameter handling
 
 ```makefile
 generate-migrations title:
@@ -75,7 +77,9 @@ tests *args:
 
 This lets you customize commands on the fly and forward flags straight through, e.g. `just tests -k my_test`.
 
-Just is composable: you can run commands from other justfiles:
+### Composable justfiles
+
+You can run commands from other justfiles:
 ```makefile
 migrate:
     just ../project_a/migrate
@@ -84,7 +88,9 @@ migrate:
 
 This is great for having a "main" justfile that orchestrates others. If you have services A, B and C, a top-level `just run` can call each service's own `just run`, giving you a one-command bootstrap for the whole stack while keeping each service's implementation details in its own repo/folder.
 
-Shebang integration: you can run arbitrary languages with a shebang:
+### Shebang integration
+
+You can run arbitrary languages with a shebang:
 
 ```makefile
 uuid:
@@ -97,7 +103,9 @@ It's an easy way to do a bit more advanced scripting in whichever language you'r
 
 It also pairs nicely with the "main" justfile pattern: you can declare your services at the top of the justfile (and even group them, e.g. `backend` and `frontend`), then loop over them in bash to run the same command on each one.
 
-Command helpers like confirmation prompts and grouping:
+### Command helpers
+
+Things like confirmation prompts and grouping:
 
 ```makefile
 [confirm('Are you sure you want to delete the database ?')]
@@ -120,10 +128,17 @@ have to update the command to run the tests both in the justfile and in the CI i
 
 Just is most appealing if you already spend a lot of time in your terminal. Some people prefer a different workflow, using the Docker Desktop app to start containers, configuring their IDE to run the tests, and so on. If they want to keep that workflow, they have to dig into the justfile and replicate the commands into their own tools. In that case Just still is a really nice source of truth: the way to run the app, the tests, the linter, etc. is documented and easy to execute.
 
+## And that's it 
+
+Just is 
+
+
 ## Justfile example
 
 ```Justfile
 run_cmd := "docker compose -f docker-compose.yml"
+
+app_name = "a_wonderful_app"
 
 [private]
 default:
@@ -131,7 +146,7 @@ default:
 
 [group('run')]
 run:
-    {{ run_cmd }} up -d "your_application" --build    
+    {{ run_cmd }} up -d {{ app_name }} --build    
 
 [group('Package-Management')]
 compile-dependencies:
