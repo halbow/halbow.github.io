@@ -1,7 +1,7 @@
 ---
 title: "Just do it ✅"
 date: 2025-10-30T11:36:46+01:00
-draft: true
+draft: false
 ---
 
 

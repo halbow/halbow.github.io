@@ -6,8 +6,19 @@
     <description>Recent content in Posts on Halbow&#39;s  blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Jun 2024 08:10:43 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 30 Oct 2025 11:36:46 +0100</lastBuildDate>
     <atom:link href="https://halbow.me/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Just do it ✅</title>
+      <link>https://halbow.me/posts/just-do-it/</link>
+      <pubDate>Thu, 30 Oct 2025 11:36:46 +0100</pubDate>
+      <guid>https://halbow.me/posts/just-do-it/</guid>
+      <description>&lt;p&gt;If you&amp;rsquo;ve ever maintained a Makefile just to alias a few shell commands, &lt;a href=&#34;https://github.com/casey/just&#34;&gt;Just&lt;/a&gt; is probably what you actually want.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ve been using it for a while now and &lt;em&gt;just&lt;/em&gt; wanted to share why I like it so much.&lt;/p&gt;
+&lt;h2 id=&#34;what-is-just--&#34;&gt;What is Just ? 🕵️&lt;/h2&gt;
+&lt;p&gt;Just is a command runner, which is simply a tool that helps you run commands. Usually it&amp;rsquo;s a file where you define some commands
+and how to run them:&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Is 100% coverage worth it ?</title>
       <link>https://halbow.me/posts/coverage/</link>

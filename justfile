@@ -6,7 +6,8 @@ run-dev:
     hugo server -D
 
 build:
-    hugo --minify
+    hugo -b https://halbow.me -d docs
+    git add docs
 
 update-themes:
     git -C themes/PaperMod pull
