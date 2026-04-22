@@ -63,7 +63,7 @@ the same command and avoid interfering with the flow of other developers (beside
 
 ## Some cool features of Just
 
-Here's a few things I really like about Just
+Here are a few things I really like about Just:
 
 ### Easy parameter handling
 
@@ -128,9 +128,10 @@ have to update the command to run the tests both in the justfile and in the CI i
 
 Just is most appealing if you already spend a lot of time in your terminal. Some people prefer a different workflow, using the Docker Desktop app to start containers, configuring their IDE to run the tests, and so on. If they want to keep that workflow, they have to dig into the justfile and replicate the commands into their own tools. In that case Just still is a really nice source of truth: the way to run the app, the tests, the linter, etc. is documented and easy to execute.
 
-## And that's it 
+## And that's it !
 
-Just is 
+No rocket science, but Just is a really nice CLI tool, easy to start with and really powerful given how composable it is.
+I'll leave you with an example of a minimal justfile containing most of the commands that I have in most of my projects!
 
 
 ## Justfile example
@@ -138,7 +139,7 @@ Just is
 ```Justfile
 run_cmd := "docker compose -f docker-compose.yml"
 
-app_name = "a_wonderful_app"
+app_name := "a_wonderful_app"
 
 [private]
 default:
