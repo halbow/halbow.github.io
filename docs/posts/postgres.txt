@@ -1,0 +1,6 @@
+# example of posgres in sqlalchemy
+
+
+regex
+ranges
+arrays for tags

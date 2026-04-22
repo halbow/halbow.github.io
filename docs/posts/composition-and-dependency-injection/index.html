@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="auto">
+<html lang="en" dir="auto" data-theme="auto">
 
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,7 +12,7 @@ which clicked on many level with how I code nowadays. I was never a huge fan of 
 recommend to watch the talk if you feel the same ! But I recently learned that when trying to apply composition together with dependency injection, things can become a bit more complex 😶">
 <meta name="author" content="">
 <link rel="canonical" href="https://halbow.me/posts/composition-and-dependency-injection/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4b72e7725c68fccaac08b7b94b4bf3724ac8531837c6717dbd3e55b5a23b0117.css" integrity="sha256-S3Lnclxo/MqsCLe5S0vzckrIUxg3xnF9vT5VtaI7ARc=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://halbow.me/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://halbow.me/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://halbow.me/favicon-32x32.png">
@@ -41,36 +41,44 @@ recommend to watch the talk if you feel the same ! But I recently learned that w
                 --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
+                color-scheme: dark;
             }
 
             .list {
                 background: var(--theme);
             }
 
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
+            .toc {
+                background: var(--entry);
             }
         }
 
     </style>
-</noscript><meta property="og:title" content="Composition and Dependency Injection" />
-<meta property="og:description" content="Back at Europython this year, I attended this very good talk on composition by Hynek Schlawack,
-which clicked on many level with how I code nowadays. I was never a huge fan of oriented object programming and inheritance in particular. I really
-recommend to watch the talk if you feel the same ! But I recently learned that when trying to apply composition together with dependency injection, things can become a bit more complex 😶" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://halbow.me/posts/composition-and-dependency-injection/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-11-06T19:55:21+01:00" />
-<meta property="article:modified_time" content="2023-11-06T19:55:21+01:00" />
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Composition and Dependency Injection"/>
-<meta name="twitter:description" content="Back at Europython this year, I attended this very good talk on composition by Hynek Schlawack,
-which clicked on many level with how I code nowadays. I was never a huge fan of oriented object programming and inheritance in particular. I really
-recommend to watch the talk if you feel the same ! But I recently learned that when trying to apply composition together with dependency injection, things can become a bit more complex 😶"/>
+</script><meta property="og:url" content="https://halbow.me/posts/composition-and-dependency-injection/">
+  <meta property="og:site_name" content="Halbow&#39;s  blog">
+  <meta property="og:title" content="Composition and Dependency Injection">
+  <meta property="og:description" content="Back at Europython this year, I attended this very good talk on composition by Hynek Schlawack, which clicked on many level with how I code nowadays. I was never a huge fan of oriented object programming and inheritance in particular. I really recommend to watch the talk if you feel the same ! But I recently learned that when trying to apply composition together with dependency injection, things can become a bit more complex 😶">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-11-06T19:55:21+01:00">
+    <meta property="article:modified_time" content="2023-11-06T19:55:21+01:00">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Composition and Dependency Injection">
+  <meta name="twitter:description" content="Back at Europython this year, I attended this very good talk on composition by Hynek Schlawack, which clicked on many level with how I code nowadays. I was never a huge fan of oriented object programming and inheritance in particular. I really recommend to watch the talk if you feel the same ! But I recently learned that when trying to apply composition together with dependency injection, things can become a bit more complex 😶">
 
 
 <script type="application/ld+json">
@@ -123,31 +131,19 @@ recommend to watch the talk if you feel the same ! But I recently learned that w
 }
 </script>
 </head>
-
-<body class="" id="top">
-<script>
-    if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.body.classList.add('dark');
-    }
-
-</script>
-
-<header class="header">
-    <nav class="nav">
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
         <div class="logo">
             <a href="https://halbow.me/" accesskey="h" title="Halbow&#39;s  blog (Alt + H)">Halbow&#39;s  blog</a>
             <div class="logo-switches">
-                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
-                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
-                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
@@ -163,7 +159,7 @@ recommend to watch the talk if you feel the same ! But I recently learned that w
                 </button>
             </div>
         </div>
-        <ul id="menu">
+        <ul id="menu" class="menu">
             <li>
                 <a href="https://halbow.me/posts/" title="Archive">
                     <span>Archive</span>
@@ -189,12 +185,12 @@ recommend to watch the talk if you feel the same ! But I recently learned that w
 
 </div>
   </header> 
-  <div class="post-content"><p>Back at Europython this year, I attended this very good <a href="https://www.youtube.com/watch?v=2qpW1-7TnzA">talk</a> on composition by <a href="https://hynek.me">Hynek Schlawack</a>,
+  <div class="post-content md-content"><p>Back at Europython this year, I attended this very good <a href="https://www.youtube.com/watch?v=2qpW1-7TnzA">talk</a> on composition by <a href="https://hynek.me">Hynek Schlawack</a>,
 which clicked on many level with how I code nowadays. I was never a huge fan of oriented object programming and inheritance in particular. I really
 recommend to watch the talk if you feel the same ! But I recently learned that when trying to apply composition together with dependency injection, things can become a bit more complex 😶</p>
 <h1 id="-the-case">💼 The case<a hidden class="anchor" aria-hidden="true" href="#-the-case">#</a></h1>
 <p>The usecase we had looked very similar to the example in the talk, a simplified verison would look like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OutputConvertr</span>(abc<span style="color:#f92672">.</span>ABC):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OutputConvertr</span>(abc<span style="color:#f92672">.</span>ABC):
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@abc.abstractmethod</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">convert_file</span>(self, working_dir: Path, file: str):
 </span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">NotImplementedError</span>
@@ -211,7 +207,7 @@ recommend to watch the talk if you feel the same ! But I recently learned that w
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">convert_file</span>(self, working_dir: Path, file: str):
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">...</span> <span style="color:#75715e"># any logic to convert a incomming file to CSV</span>
 </span></span></code></pre></div><p>When seeing this example in code review, it really felt like we could apply almost exactly the same principle and re-write this like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileConvertor</span>(Protocol):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileConvertor</span>(Protocol):
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">convert_file</span>(self, working_dir: Path, file: str):
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">...</span>
 </span></span><span style="display:flex;"><span>
@@ -224,7 +220,7 @@ recommend to watch the talk if you feel the same ! But I recently learned that w
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">...</span> <span style="color:#75715e"># any logic to convert a incomming file to CSV</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OutputConverter</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, converter: FileConverter):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self, converter: FileConverter):
 </span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>converter <span style="color:#f92672">=</span> converter
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">convert_output</span>(self, working_dir: Path):
@@ -235,18 +231,18 @@ FileConverter only needs to handle conversion of one file, and the OutputConvert
 I was ready to add a suggestion to improve the code in this way when I realized that in our case, it would lead to some extra complexity &hellip;</p>
 <h1 id="-dependency-injection">💉 Dependency Injection<a hidden class="anchor" aria-hidden="true" href="#-dependency-injection">#</a></h1>
 <p>We use dependency injection heavily in our codebase and most of our core logic looks like this (nothing out of ordinary if you are familiar with Clean Architecture and its principle):</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SomeUsecase</span>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SomeUsecase</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@inject</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, some_service: SomeService):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self, some_service: SomeService):
 </span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>some_service <span style="color:#f92672">=</span> some_service
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">execute</span>(self, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">pass</span>
 </span></span></code></pre></div><p>And in this case, the the design with inheritance makes it easier to have different usecase with different converter
 as the dependency injection knows which class to inject directly:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SomeUsecase</span>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SomeUsecase</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@inject</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, converter: XmlConverter):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self, converter: XmlConverter):
 </span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>converter
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">execute</span>(self, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
@@ -256,7 +252,7 @@ as the dependency injection knows which class to inject directly:</p>
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AnotherUsecase</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@inject</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, converter: CsvConverter):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self, converter: CsvConverter):
 </span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>converter                  
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">execute</span>(self, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
@@ -267,12 +263,12 @@ as the dependency injection knows which class to inject directly:</p>
 cannot be instanciated easily by the Dependency Injector framework (we use <a href="https://github.com/python-injector/injector">injector</a>)
 as it doesn&rsquo;t know which <code>FileConveter</code> to use and even if it did,
 it would need to bind multiple implementation of the same interface for each converter</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> injector <span style="color:#f92672">import</span> inject
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> injector <span style="color:#f92672">import</span> inject
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SomeUsecase</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@inject</span>
 </span></span><span style="display:flex;"><span>   <span style="color:#75715e"># Not as obvious on how specify the type here</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, converter: OutputConverter):  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self, converter: OutputConverter):  
 </span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>converter
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">execute</span>(self, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
@@ -281,17 +277,17 @@ it would need to bind multiple implementation of the same interface for each con
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">...</span>
 </span></span></code></pre></div><p>The main workaround I found to tackle this is to make the <code>Converter</code> class generic:</p>
 <p>(We can use the <a href="https://peps.python.org/pep-0695/">new syntax for generic</a> introduced in Python 3.2 😎)</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OutputConverter</span>[T: FileConvertor]:
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, converter: T):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OutputConverter</span>[T: FileConvertor]:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self, converter: T):
 </span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>converter <span style="color:#f92672">=</span> converter
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">convert_output</span>(self, working_dir: Path):
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> file <span style="color:#f92672">in</span> os<span style="color:#f92672">.</span>listdir(working_dir):
 </span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>converter<span style="color:#f92672">.</span>convert_file(working_dir, file)
 </span></span></code></pre></div><p>And ideally we could use it in our usecase like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SomeUsecase</span>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SomeUsecase</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@inject</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, converter: OutputConverter[XmlConverter]):  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self, converter: OutputConverter[XmlConverter]):  
 </span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>converter
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">execute</span>(self, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
@@ -301,14 +297,14 @@ it would need to bind multiple implementation of the same interface for each con
 </span></span></code></pre></div><p>Unfortunately it&rsquo;s not something supported yet with the injector library (see <a href="https://github.com/python-injector/injector/issues/175">here</a>) and
 the only way I foudn to make ti work require quite a bit more code: we have to implement explicitely a class for each <code>Converter</code> type and we have
 to manually add it to the injector&rsquo;s binder (again for each converter type):</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">XmlOutputConverter</span>(OutputConverter[XmlConverter]):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">XmlOutputConverter</span>(OutputConverter[XmlConverter]):
 </span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">pass</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>binder<span style="color:#f92672">.</span>bind(XmlOutputConverter, OutputConverter(XmlConverter()))
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SomeUsecase</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@inject</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, converter: XmlOutputConverter):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self, converter: XmlOutputConverter):
 </span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>converter
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">execute</span>(self, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
@@ -330,7 +326,7 @@ keeping the inheritance deisgn, maybe we&rsquo;ll refactor if generics ends up b
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="https://halbow.me/">Halbow&#39;s  blog</a></span> · 
+        <span>&copy; 2026 <a href="https://halbow.me/">Halbow&#39;s  blog</a></span> · 
 
     <span>
         Powered by
@@ -338,16 +334,23 @@ keeping the inheritance deisgn, maybe we&rsquo;ll refactor if generics ends up b
         <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
     </span>
 </footer>
-<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
-        <path d="M12 6H0l6-6z" />
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
     </svg>
 </a>
 
 <script>
-    let menu = document.getElementById('menu')
+    let menu = document.getElementById('menu');
     if (menu) {
-        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
         menu.onscroll = function () {
             localStorage.setItem("menu-scroll-position", menu.scrollLeft);
         }
@@ -374,25 +377,25 @@ keeping the inheritance deisgn, maybe we&rsquo;ll refactor if generics ends up b
 
 </script>
 <script>
-    var mybutton = document.getElementById("top-link");
+    var toplink = document.getElementById("top-link");
     window.onscroll = function () {
-        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
-            mybutton.style.visibility = "visible";
-            mybutton.style.opacity = "1";
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
         } else {
-            mybutton.style.visibility = "hidden";
-            mybutton.style.opacity = "0";
+            toplink.classList.add("hidden");
         }
     };
 
 </script>
 <script>
     document.getElementById("theme-toggle").addEventListener("click", () => {
-        if (document.body.className.includes("dark")) {
-            document.body.classList.remove('dark');
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
             localStorage.setItem("pref-theme", 'light');
         } else {
-            document.body.classList.add('dark');
+            html.dataset.theme = 'dark';
             localStorage.setItem("pref-theme", 'dark');
         }
     })
